@@ -1,0 +1,143 @@
+def localProperties = new Properties()
+def localPropertiesFile = rootProject.file('local.properties')
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.withReader('UTF-8') { reader ->
+        localProperties.load(reader)
+    }
+}
+
+def flutterRoot = localProperties.getProperty('flutter.sdk')
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file.")
+}
+
+def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+if (flutterVersionCode == null) {
+    flutterVersionCode = '1'
+}
+
+def flutterVersionName = localProperties.getProperty('flutter.versionName')
+if (flutterVersionName == null) {
+    flutterVersionName = '1.0'
+}
+
+apply plugin: 'com.android.application'
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
+
+// 极光推送
+// apply plugin: 'com.google.gms.google-services'
+// apply plugin: 'com.huawei.agconnect'
+
+def keystorePropertiesFile = rootProject.file("key.properties")
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
+android {
+
+    compileSdkVersion 31
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    defaultConfig {
+        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
+        applicationId "com.wjhs.app"
+        ndk {
+              // abiFilters 'armeabi', 'armeabi-v7a', 'x86', 'x86_64', 'mips', 'mips64', 'arm64-v8a'
+              abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86"
+        }
+        minSdkVersion 19
+        targetSdkVersion 31
+        versionCode flutterVersionCode.toInteger()
+        versionName flutterVersionName
+        multiDexEnabled true
+        manifestPlaceholders = [
+                // 配置高德地图信息
+                AMAP_KEY     : "acaed2a08b279d2a8bc4b004f50c97a3",
+                // 配置极光推送信息
+                JPUSH_PKGNAME: applicationId,
+                JPUSH_APPKEY : "ebded315f07e269dc00e5fa1", // NOTE: JPush 上注册的包名对应的 Appkey.
+                JPUSH_CHANNEL: "developer-default", //暂时填写默认值即可.
+
+                // MEIZU_APPKEY  : "MZ-魅族的APPKEY",
+                // MEIZU_APPID   : "MZ-魅族的APPID",
+                // XIAOMI_APPID  : "MI-小米的APPID",
+                // XIAOMI_APPKEY : "MI-小米的APPKEY",
+                // OPPO_APPKEY   : "OP-oppo的APPKEY",
+                // OPPO_APPID    : "OP-oppo的APPID",
+                // OPPO_APPSECRET: "OP-oppo的APPSECRET",
+                // VIVO_APPKEY   : "vivo的APPKEY",
+                // VIVO_APPID    : "vivo的APPID",
+                // HONOR_APPID   : "Honor的APP ID"
+        ]
+    }
+
+    signingConfigs {
+        release {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+        debug {
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+        }
+    }
+    buildTypes {
+        release {
+            signingConfig signingConfigs.release
+
+            //关闭混淆, 否则在运行release包后可能出现运行崩溃， TODO后续进行混淆配置
+            minifyEnabled false //删除无用代码
+            shrinkResources false //删除无用资源
+        }
+
+        debug {
+            signingConfig signingConfigs.debug
+            ndk {
+                //这里要加上，否则debug包会出问题,后面两个为可选，x86建议加上不然部分模拟器回报错
+                abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86"
+            }
+        }
+    }
+
+    dependencies {
+
+        // 高德地图依赖配置
+        implementation fileTree(dir: 'libs', include: ['*.jar'])
+        implementation('com.amap.api:location:5.2.0')
+        implementation 'com.amap.api:search:5.0.0'
+        implementation('com.amap.api:3dmap:8.1.0')
+
+
+        // 极光推送依赖配置
+        implementation 'cn.jiguang.sdk:jcore:3.3.0'  // 此处以JCore 3.3.0 版本为例。
+        implementation 'cn.jiguang.sdk:jpush:4.7.2'  // 此处以JPush 4.7.2 版本为例
+
+        // 接入华为厂商
+        // implementation 'com.huawei.hms:push:6.3.0.304'
+        // implementation 'cn.jiguang.sdk.plugin:huawei:4.7.2'// 极光厂商插件版本与接入 JPush 版本保持一致，下同
+        // 接入荣耀厂商
+        // implementation 'cn.jiguang.sdk.plugin:honor:4.7.2'
+        // 接入 FCM 厂商
+        // implementation 'com.google.firebase:firebase-messaging:23.0.5'
+        // implementation 'cn.jiguang.sdk.plugin:fcm:4.7.2'
+        // 接入魅族厂商
+        // implementation 'cn.jiguang.sdk.plugin:meizu:4.7.2'
+        // 接入 VIVO 厂商
+        // implementation 'cn.jiguang.sdk.plugin:vivo:4.7.2'
+        // 接入 OPPO 厂商
+        // implementation 'cn.jiguang.sdk.plugin:oppo:4.7.2'
+        // 接入小米厂商
+        // implementation 'cn.jiguang.sdk.plugin:xiaomi:4.7.2'
+    }
+}
+
+flutter {
+    source '../..'
+}

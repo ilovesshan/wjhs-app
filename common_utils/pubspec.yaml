@@ -1,0 +1,103 @@
+name: common_utils
+description: A Common Utils For Flutter project.
+version: 0.0.1
+homepage:
+
+environment:
+  sdk: ">=2.13.3 <3.0.0"
+  flutter: ">=1.17.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  # 唤起三方应用
+  url_launcher: ^6.0.10
+  # 状态管理
+  provider: ^6.0.3
+  get: ^4.6.0
+  # 网络请求
+  dio: ^4.0.6
+  # 全局toast插件
+  flutter_easyloading: ^3.0.5
+  # 屏幕适配插件
+  flutter_screenutil: ^5.5.3+2
+  # 上拉加载、下拉刷新插件
+  flutter_easyrefresh: ^2.2.1
+  # 图片预览插件
+  photo_view: ^0.14.0
+  # 图片选择器
+  image_picker: ^0.8.4+1
+  # 本地存储插件
+  shared_preferences: ^2.0.7
+  # 权限处理
+  permission_handler: ^8.1.6
+  # 图片下载
+  image_gallery_saver: ^1.7.1
+  # 图片缓存
+  cached_network_image: ^3.2.0
+  # 扫码插件
+  barcode_scan2: '4.2.1'
+  flutter_scankit: ^1.2.4
+  # 网络检测插件
+  connectivity: ^3.0.6
+  # RSA加密插件
+  encrypt: ^5.0.0
+  # 操作cookie的插件
+  dio_cookie_manager: ^2.0.0
+  cookie_jar: ^3.0.1
+  # 表达式计算
+  expressions: '0.2.3'
+  # 卢轮播图插件
+  flutter_swiper_plus: ^2.0.4
+  # tabBar 小红点
+  badges: ^2.0.3
+  # 贝壳UI 组件库
+  bruno: ^3.0.0
+  # UUID库
+  uuid: ^3.0.6
+  # 下拉框模糊搜索
+  # flutter_typeahead: ^4.0.0
+  flutter_typeahead: ^3.1.0
+  # 二维码生成插件
+  qr_flutter: ^4.0.0
+  # webview 插件
+  webview_flutter: '2.0.13'
+  flutter_webview_plugin: '0.4.0'
+  #  flutter_webview_plugin:
+  #    git: https://github.com/nuc134r/flutter_webview_plugin.git
+
+  # 高德地图定位插件
+  amap_flutter_location: ^3.0.0
+  # 高德地图插件
+  amap_flutter_map: ^3.0.0
+  # 微信插件
+  # fluwx: ^3.9.2
+  fluwx_no_pay: ^3.9.1
+  #  分享插件
+  share_plus: ^4.4.0
+  # tabBar 插件
+  fancy_bottom_navigation: ^0.3.3
+  curved_navigation_bar: ^1.0.3
+  # 国际化
+  flutter_cupertino_localizations: ^1.0.1
+  # 本机号码一键登录
+  jverify: ^2.2.6
+  # 极光推送
+  jpush_flutter: ^2.4.0
+  # github 集成
+  # jpush_flutter:
+  # git:
+  #   url: git://github.com/jpush/jpush-flutter-plugin.git
+  #   ref: master
+
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^1.0.0
+flutter:
+
+
+  assets:
+    - assets/common/

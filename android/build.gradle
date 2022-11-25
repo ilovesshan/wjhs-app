@@ -1,0 +1,45 @@
+buildscript {
+    repositories {
+        google()
+        mavenCentral()
+
+        // 极光推送
+        jcenter()
+        // hms
+        maven { url 'http://developer.huawei.com/repo/' }
+        // fcm
+        // maven { url "https://maven.google.com" }
+    }
+
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.1.0'
+
+        // 极光推送
+        // fcm
+        classpath 'com.google.gms:google-services:4.3.8'
+        // hms
+        classpath 'com.huawei.agconnect:agcp:1.6.0.300'
+    }
+}
+
+allprojects {
+    repositories {
+        google()
+        jcenter()
+        mavenCentral()
+        //hms
+        maven { url 'http://developer.huawei.com/repo/' }
+        //fcm
+        // maven { url "https://maven.google.com" }
+    }
+}
+
+rootProject.buildDir = '../build'
+subprojects {
+    project.buildDir = "${rootProject.buildDir}/${project.name}"
+    project.evaluationDependsOn(':app')
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}
