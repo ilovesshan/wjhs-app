@@ -39,8 +39,8 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 SizedBox(height: 50.h),
-                Image.asset("assets/images/app_logo/logo-green.png"),
-                SizedBox(height: 150.h),
+                Image.asset("assets/images/app_logo/logo.png", width: 200.w, height: 200.w),
+                SizedBox(height: 100.h),
                 Column(
                   children: [
                     // 用户名

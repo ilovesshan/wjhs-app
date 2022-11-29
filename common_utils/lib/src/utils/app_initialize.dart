@@ -34,13 +34,13 @@ class AppInitialize {
   static ThemeData appTheme() {
     return ThemeData(
         canvasColor: Colors.white,
-        primarySwatch: ColorsUtil.createMaterialColor(Color(int.parse("2ecc71", radix: 16) | 0xFF000000)),
-        primaryColor: Color(int.parse("2ecc71", radix: 16) | 0xFF000000),
+        primarySwatch: ColorsUtil.createMaterialColor(Color(int.parse("0bab9b", radix: 16) | 0xFF000000)),
+        primaryColor: Color(int.parse("0bab9b", radix: 16) | 0xFF000000),
         bottomNavigationBarTheme: const BottomNavigationBarThemeData(
-          selectedItemColor: Color(0xFF2ecc71),
-          unselectedItemColor: Color(0xFF2ecc71),
-          selectedLabelStyle:TextStyle(color: Color(0xFF2ecc71), fontSize: 10),
-          unselectedLabelStyle:TextStyle(color: Color(0xFF2ecc71), fontSize: 10),
+          selectedItemColor: Color(0XFF0bab9b),
+          unselectedItemColor: Color(0XFF0bab9b),
+          selectedLabelStyle:TextStyle(color: Color(0XFF0bab9b), fontSize: 10),
+          unselectedLabelStyle:TextStyle(color: Color(0XFF0bab9b), fontSize: 10),
         )
     );
   }

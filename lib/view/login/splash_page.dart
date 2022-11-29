@@ -33,7 +33,7 @@ class _SplashPageState extends State<SplashPage> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Expanded(child:Image.asset("assets/images/app_logo/logo-green.png"),),
+            Expanded(child:Image.asset("assets/images/app_logo/app-logo.png"),),
             const Text("POWER BY FLUTTER APP", style: TextStyle(color: Color(0xFFb2bec3))),
             SizedBox(height: 100.h)
           ],
