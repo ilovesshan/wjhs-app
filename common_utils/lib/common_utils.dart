@@ -41,6 +41,7 @@ export 'src/mode/event_bus_call_back_model.dart';
 export 'src/mode/user_info_model.dart';
 export 'src/mode/common_bottom_sheet_result_model.dart';
 export 'src/mode/gaode_pois_model.dart';
+export 'src/mode/system_dict_model.dart';
 
 /// 网络请求相关
 export 'src/service_utils/http_helper.dart';
