@@ -11,7 +11,11 @@ class SwiperWidget{
         autoplay: true, itemCount: list.length,
         pagination: const SwiperPagination(alignment: Alignment.bottomCenter, builder: SwiperPagination.dots),
         itemBuilder: (BuildContext context, int index) {
-          return Image.asset(list[index], width: width.w, height: height, fit: BoxFit.fill,);
+          return
+            list[index].startsWith("http")
+            // ? Image.network(list[index], width: width.w, height: height, fit: BoxFit.fill)
+            ? FadeInImage.assetNetwork(placeholder: "assets/common/loading.png", image: list[index], width: width.w, height: height, fit: BoxFit.fill)
+            : Image.asset(list[index], width: width.w, height: height, fit: BoxFit.fill);
         },
       ),
     );
