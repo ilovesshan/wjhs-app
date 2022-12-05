@@ -7,4 +7,10 @@ class Apis {
 
   // 获取字典信息
   static const String systemDict = "/systemDict";
+
+  // 获取轮播图
+  static const String swiper = "/swiper";
+
+  // 获取通知公告
+  static const String notice = "/notice";
 }

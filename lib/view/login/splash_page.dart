@@ -1,10 +1,8 @@
 import 'dart:math';
 
-import 'package:app/api/apis.dart';
 import 'package:app/model/user_auth_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/login_service.dart';
-import 'package:app/service/system_dict_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
@@ -25,11 +23,6 @@ class _SplashPageState extends State<SplashPage> {
     SharedPreferencesUtil.initSharedPreferences();
 
      Future.delayed( const Duration(milliseconds: 2000),() async {
-       // 请求数据字典表
-       if(SharedPreferencesDao.getSystemDict().isEmpty){
-         final List<SystemDictModel> systemDictModel = await SystemDictService.requestSystemDict();
-         SharedPreferencesDao.saveSystemDict(systemDictModel);
-       }
        // 判断是否能自动登录
        String username = SharedPreferencesDao.getUsername();
        String password = SharedPreferencesDao.getPassWord();

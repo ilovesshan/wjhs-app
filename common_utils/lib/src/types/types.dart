@@ -3,6 +3,8 @@ import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 typedef OnResult = void Function (int result);
 
+typedef OnItemPressedWithIndex = void Function (int result);
+
 typedef OnItemPressed = void Function (String id);
 
 typedef OnPressed = void Function();

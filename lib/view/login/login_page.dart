@@ -119,6 +119,12 @@ class _LoginPageState extends State<LoginPage> {
         SharedPreferencesDao.saveUsername(account);
         SharedPreferencesDao.savePassword(password);
 
+        // 请求数据字典表
+        if(SharedPreferencesDao.getSystemDict().isEmpty){
+          final List<SystemDictModel> systemDictModel = await SystemDictService.requestSystemDict();
+          SharedPreferencesDao.saveSystemDict(systemDictModel);
+        }
+
         // 做一次权限校验 只允骑手/回收中心用户登录
         if(SystemDictUtil.mobileCanLogin("${userInfoModel.userType}")){
           // 去首页
