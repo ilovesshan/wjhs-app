@@ -1,3 +1,8 @@
+import 'package:app/model/notice_model.dart';
+import 'package:app/model/swiper_model.dart';
+import 'package:app/router/router.dart';
+import 'package:app/service/notice_service.dart';
+import 'package:app/service/swiper_service.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +29,34 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     "App技术栈：flutter + dio + getx + provider + 原生android",
     "小程序技术栈：原生小程序 + typescript",
   ];
+
+  List<SwiperModel> swiperModels = [];
+  List<NoticeModel> noticeModels = [];
+
+  @override
+  void initState() {
+    super.initState();
+
+    _requestHomeData();
+  }
+
+  _requestHomeData() async {
+     swiperModels = await SwiperService.requestSwiper();
+     noticeModels = await NoticeService.requestNotice();
+
+    _bannerList.clear();
+    _marqueeTextList.clear();
+
+    for (var swiperModel in swiperModels) {
+      _bannerList.add(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+ "${swiperModel.attachment?.url}");
+    }
+    for (var noticeModel in noticeModels) {
+      _marqueeTextList.add("${noticeModel.subTitle}");
+    }
+    setState(() {});
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -55,27 +88,27 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
             clipBehavior: Clip.none,
             children: [
               // 背景填充
-              Container(
-                height: 200.h, width: Get.width, alignment: Alignment.topCenter,
-                child: Container(width:Get.width, height: 80.h, color: Get.theme.primaryColor)
-              ),
+              Container(height: 200.h, width: Get.width, alignment: Alignment.topCenter, child: Container(width:Get.width, height: 80.h, color: Get.theme.primaryColor)),
               // 轮播图模块
               Positioned(
                 left: 5.w, right: 5.w,
-                child: ClipRRect(borderRadius: BorderRadius.circular(20.r), child: SwiperWidget.build(list: _bannerList),
-                ),
-              )
+                child: ClipRRect(borderRadius: BorderRadius.circular(20.r), child: SwiperWidget.build(list: _bannerList, onItemPressed: (index)=>{
+                  Get.toNamed(YFRouter.webviewPlugin, arguments: {"path": swiperModels[index].link, "title":swiperModels[index].title})
+                }),
+              ))
             ],
           ),
 
           // 公告
           Container(
-            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w), width:Get.width, height: 50.h, color: Colors.white,
+            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w), width:Get.width, height: 40.h, color: Colors.white,
             child: Row(
               children: [
                 Image.asset("assets/common/notice.png", width: 15.w, height: 15.w,),
                 SizedBox(width: 10.h,),
-                Expanded(child: Container(alignment: Alignment.center, height: 25.h, child: buildMarqueeWidget(_marqueeTextList))),
+                Expanded(child: Container(alignment: Alignment.center, height: 20.h, child: buildMarqueeWidget(_marqueeTextList, onItemPressed: (index)=>{
+                  Get.toNamed(YFRouter.noticeDetail, arguments: {"notice":noticeModels[index]}),
+                }))),
               ],
             ),
           ),
@@ -109,13 +142,16 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   }
 
   ///上下轮播 安全提示
-  MarqueeWidget buildMarqueeWidget(List<String> loopList) {
+  Widget buildMarqueeWidget(List<String> loopList, {OnItemPressedWithIndex? onItemPressed}) {
     return MarqueeWidget(
       //子Item构建器
       itemBuilder: (BuildContext context, int index) {
         String itemStr = loopList[index];
         //通常可以是一个 Text文本
-        return Tooltip(message: itemStr, child: Text(itemStr, overflow: TextOverflow.ellipsis));
+        return GestureDetector(
+          child: Tooltip(message: itemStr, child: Text(itemStr, overflow: TextOverflow.ellipsis)),
+          onTap: ()=> { if(onItemPressed != null)onItemPressed(index)}
+        );
       },
       //循环的提示消息数量
       count: loopList.length,

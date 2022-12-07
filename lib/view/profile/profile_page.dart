@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:app/router/router.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -71,6 +72,15 @@ class _ProfilePageState extends State<ProfilePage> {
           ElevatedButton(child: const Text("唤起腾讯地图"),onPressed: () async {
             // 30.6555,104.07721 春熙路太古里步行街
             await MapNavigationUtil.gotoBaiduMap("104.07721","30.6555");
+          }),
+
+          ElevatedButton(child: const Text("退出登录"),onPressed: () async {
+            SharedPreferencesDao.removeUserInfo();
+            SharedPreferencesDao.removeId();
+            SharedPreferencesDao.removeUsername();
+            SharedPreferencesDao.removePassword();
+            SharedPreferencesDao.removeToken();
+            Get.offAndToNamed(YFRouter.login);
           }),
         ],
       ),

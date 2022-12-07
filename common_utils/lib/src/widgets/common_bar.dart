@@ -9,7 +9,7 @@ class CommonBar {
     return AppBar(
       title: Text(text, style: TextStyle(fontSize: 18.sp, color: const Color(0xFF222222), fontWeight: FontWeight.bold)),backgroundColor: Colors.white, centerTitle: true, elevation: 0,
       leading: GestureDetector(
-        child: Image.asset("assets/common/nav-back-white.png", width: 10.w, height: 18.h,scale: 4,),
+        child: Image.asset("assets/common/nav-back-black.png", width: 10.w, height: 18.h, scale: 2),
         onTap: ()=> Get.back(),
       ),
       actions: actions,

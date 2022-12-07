@@ -1,4 +1,5 @@
 import 'package:app/view/home/pages/choose_address_page.dart';
+import 'package:app/view/home/pages/notice_detail_page.dart';
 import 'package:app/view/login/login_page.dart';
 import 'package:app/view/login/splash_page.dart';
 import 'package:app/view/menu_container.dart';
@@ -9,6 +10,8 @@ class YFRouter {
   static const String menuContainer = "/menuContainer";
   static const String login = "/login";
   static const String chooseAddress = "/chooseAddress";
+  static const String noticeDetail = "/noticeDetail";
+  static const String webviewPlugin = "/webviewPlugin";
 
   static List<GetPage> routes() {
     return [
@@ -16,6 +19,8 @@ class YFRouter {
       GetPage(name: login, page: () => const LoginPage()),
       GetPage(name: menuContainer, page: () => const MenuContainer()),
       GetPage(name: chooseAddress, page: () => const ChooseAddressPage()),
+      GetPage(name: noticeDetail, page: () => const NoticeDetailPage()),
+      GetPage(name: webviewPlugin, page: () => WebviewPluginPage()),
     ];
   }
 

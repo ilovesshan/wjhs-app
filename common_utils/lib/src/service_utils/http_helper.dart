@@ -48,15 +48,13 @@ class HttpHelper {
         };
 
         /// 公共请求头
-        Map<String, String> publicHeaderMap = {
-          "X-Requested-With": "XMLHttpRequest"
-        };
+        Map<String, String> publicHeaderMap = {};
 
         options.headers.addAll(publicHeaderMap);
         options.headers.addAll(tokenMap);
 
         debugPrint("***************************请求拦截***************************");
-        debugPrint('请求地址: ${  options.baseUrl + options.path}');
+        debugPrint('请求地址: ${options.baseUrl + options.path}');
         debugPrint('请求方式: ${options.method}');
         debugPrint('请求参数(Parameters): ${options.queryParameters.toString()}');
         debugPrint('请求参数(data): ${options.data.toString()}');
@@ -119,7 +117,7 @@ class HttpHelper {
                 EasyLoading.showToast("请求失败: 请求方法被禁止");
                 break;
               case 500:
-                EasyLoading.showToast(e.response!.data.toString());
+                EasyLoading.showToast(e.response!.data["message"]);
                 break;
               case 502:
                 EasyLoading.showToast("请求失败: 无效的请求");
