@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
-import 'package:amap_flutter_base/amap_flutter_base.dart';
 
 
 class HomePage extends StatefulWidget {
@@ -120,26 +119,6 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   /// 保存页面状态
   @override
   bool get wantKeepAlive => true;
-
-  /// 导航模块
-  Widget buildNavBar({required String navBarTitle, required Color backgroundColor, required String iconPath, required OnPressed onPressed}){
-    return GestureDetector(
-      behavior: HitTestBehavior.opaque,
-      child: Container(
-          width: (Get.width - 30) / 2, height: 70.h, alignment: Alignment.center, decoration: BoxDecoration(borderRadius: BorderRadius.circular(5.r),color: backgroundColor),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Image.asset(iconPath, width: iconPath.contains("yuyue")? 24.w : 30.w, height: iconPath.contains("yuyue") ? 24.w : 30.w),
-              SizedBox(width: 10.w),
-              Text(navBarTitle, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.normal, color: Color(0xFFFFFFFF))),
-            ],
-          )
-      ),
-      onTap: ()=> onPressed(),
-    );
-  }
 
   ///上下轮播 安全提示
   Widget buildMarqueeWidget(List<String> loopList, {OnItemPressedWithIndex? onItemPressed}) {
