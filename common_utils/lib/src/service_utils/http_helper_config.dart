@@ -1,6 +1,6 @@
 class HttpHelperConfig {
   static int selectIndex = 0;
-  static List<String> serviceList = ["https://76d427ba.r2.vip.cpolar.cn"];
+  static List<String> serviceList = ["http://192.168.1.102"];
 
   static void checkSelectedIndex(int index) {
     selectIndex = index;

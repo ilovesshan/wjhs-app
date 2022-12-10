@@ -1,5 +1,6 @@
 import 'package:app/api/apis.dart';
 import 'package:app/model/user_auth_model.dart';
+import 'package:app/model/user_info_model.dart';
 import 'package:common_utils/common_utils.dart';
 
 class LoginService {
