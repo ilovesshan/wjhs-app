@@ -2,8 +2,8 @@ class Apis {
   // 用户授权
   static const String userAuth = "/auth";
 
-  // 获取用户信息
-  static const String userinfo = "/users";
+  // 用户模块
+  static const String userApi = "/users";
 
   // 获取字典信息
   static const String systemDict = "/systemDict";
@@ -13,4 +13,7 @@ class Apis {
 
   // 获取通知公告
   static const String notice = "/notice";
+
+  // 图片上传接口
+  static const String attachment = "/attachments";
 }

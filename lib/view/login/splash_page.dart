@@ -4,6 +4,7 @@ import 'package:app/model/user_auth_model.dart';
 import 'package:app/model/user_info_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/login_service.dart';
+import 'package:app/service/user_service.dart';
 import 'package:app/utils/cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -35,7 +36,7 @@ class _SplashPageState extends State<SplashPage> {
            final UserAuthModel userAuthModel = await LoginService.requestUserAuth(username, password);
            if(TextUtils.isNotValid(userAuthModel.id.toString())){
              // 获取用户信息
-             final UserInfoModel userInfoModel = await LoginService.requestUserInfo("${userAuthModel.id}");
+             final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
              if(TextUtils.isNotValid(userAuthModel.id.toString())){
                // 持久化信息
                Cache.saveUserInfo(userInfoModel);

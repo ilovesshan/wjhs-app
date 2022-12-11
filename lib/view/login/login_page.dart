@@ -4,6 +4,7 @@ import 'package:app/model/user_info_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/login_service.dart';
 import 'package:app/service/system_dict_service.dart';
+import 'package:app/service/user_service.dart';
 import 'package:app/utils/cache.dart';
 import 'package:app/utils/system_dict_util.dart';
 import 'package:flutter/cupertino.dart';
@@ -114,7 +115,7 @@ class _LoginPageState extends State<LoginPage> {
       // 获取用户信息
       CommonCache.saveToken("${userAuthModel.token}");
 
-      final UserInfoModel userInfoModel = await LoginService.requestUserInfo("${userAuthModel.id}");
+      final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
       if(TextUtils.isNotValid(userAuthModel.id.toString())){
         // 持久化信息
         Cache.saveUserInfo(userInfoModel);

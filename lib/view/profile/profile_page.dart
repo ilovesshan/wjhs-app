@@ -19,7 +19,7 @@ class _ProfilePageState extends State<ProfilePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(elevation: 0, systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
+      appBar: AppBar(elevation: 0, toolbarHeight: 0, systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
       body: Column(
         children: [
           Card(
@@ -72,7 +72,10 @@ class _ProfilePageState extends State<ProfilePage> {
                   ],
                 )
               ),
-              onTap: ()=> Get.toNamed(YFRouter.userInfoDetail),
+              onTap: (){
+                // 返回时 更新一下数据
+                Get.toNamed(YFRouter.userInfoDetail)!.then((value) =>setState(() {}));
+              },
             ),
           ),
           ElevatedButton(child: const Text("退出登录"),onPressed: () async {
