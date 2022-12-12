@@ -5,6 +5,7 @@ import 'package:app/model/user_info_model.dart';
 import 'package:app/service/user_service.dart';
 import 'package:app/utils/cache.dart';
 import 'package:app/utils/system_dict_util.dart';
+import 'package:app/view/profile/widgets/common_user_info_item.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,25 +44,27 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.showWidthPrimaryTheme("个人信息"),
+      appBar: NavBar.show("个人信息"),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 10.h),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-           Column(children: [ buildUserInfoItem("用户名", TextField(
+           Column(children: [CommonUserInfoItem.buildUserInfoItem("用户名", TextField(
              textAlign: TextAlign.end,
              controller: _usernameController,
-             decoration: InputDecoration(hintText: "请输入用户名", hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey), border: InputBorder.none,),
+             style: TextStyle(fontSize: 14.sp),
+             decoration: InputDecoration(hintText: "请输入用户名", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
            )),
-             buildUserInfoItem("昵称", TextField(
+             CommonUserInfoItem.buildUserInfoItem("昵称", TextField(
                textAlign: TextAlign.end,
                controller: _nickNameController,
-               decoration: InputDecoration(hintText: "请输入昵称", hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey), border: InputBorder.none,),
+               style: TextStyle(fontSize: 14.sp),
+               decoration: InputDecoration(hintText: "请输入昵称", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
              )),
-             buildUserInfoItem("头像",buildUserAvatar(),
+             CommonUserInfoItem.buildUserInfoItem("头像",buildUserAvatar(),
              ),
-             buildUserInfoItem("性别", Row(
+             CommonUserInfoItem.buildUserInfoItem("性别", Row(
                mainAxisAlignment: MainAxisAlignment.end,
                children: [
                  BrnRadioButton(
@@ -84,12 +87,15 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                  ),
                ],
              )),
-             buildUserInfoItem("手机号", TextField(
+             CommonUserInfoItem.buildUserInfoItem("手机号", TextField(
                textAlign: TextAlign.end,
                controller: _phoneController,
-               decoration: InputDecoration(hintText: "请输入手机号", hintStyle: TextStyle(fontSize: 14.sp, color: Colors.grey), border: InputBorder.none,),
+               style: TextStyle(fontSize: 14.sp),
+               decoration: InputDecoration(hintText: "请输入手机号", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
              )),],
            ),
+
+            // 更新按钮
             Container(margin: EdgeInsets.only(bottom: 30.h), child: BrnBigMainButton(
                 title: '更新', bgColor:Get.theme.primaryColor,
                 onTap: () async {
@@ -112,8 +118,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
                     EasyLoading.showToast(updateResult["message"]);
                   }
                 },
-              ),
-            ),
+              )),
           ],
         ),
       )
@@ -130,7 +135,6 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
              : Image.asset("assets/images/app_logo/app-logo.png", width: 35.w, height: 35.w,fit: BoxFit.fill)
       ),
       onTap: () async {
-
         CommonBottomSheetSelector.show(data: _pickerOptions, onResult: ((index) async {
           if(index ==2){
             return;
@@ -147,19 +151,6 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
           }
         }));
       },
-    );
-  }
-
-  // 用户信息项Widget
-  Container buildUserInfoItem(String title, Widget valueWidget) {
-    return Container(
-      width: Get.width, height: 50.h, decoration: const BoxDecoration(border: Border(bottom: BorderSide(color: Color(0xFFf4f4f4)))),
-      child: Row(
-        children: [
-          SizedBox(width: 100.w, child: Text("$title：", style: const TextStyle(color: Color(0xFF55555c)))),
-          Expanded(child: Container(alignment:Alignment.centerRight, child: valueWidget))
-        ],
-      ),
     );
   }
 }

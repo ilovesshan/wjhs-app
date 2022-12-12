@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:app/router/router.dart';
+import 'package:app/service/user_service.dart';
 import 'package:app/utils/cache.dart';
 import 'package:app/utils/system_dict_util.dart';
 import 'package:common_utils/common_utils.dart';
@@ -35,16 +36,13 @@ class _ProfilePageState extends State<ProfilePage> {
           buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
 
           // 更改密码
-          buildProfileCommonItem(title: "更改密码", iconPath: "assets/images/profile/genggaimima.png", onPressed: ()=>{}),
+          buildProfileCommonItem(title: "更改密码", iconPath: "assets/images/profile/genggaimima.png", onPressed: (){
+            Get.toNamed(YFRouter.updatePassword);
+          }),
 
           // 退出登录
           buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
-            Cache.removeUserInfo();
-            CommonCache.removeId();
-            CommonCache.removeUsername();
-            CommonCache.removePassword();
-            CommonCache.removeToken();
-            Get.offAndToNamed(YFRouter.login);
+            UserService.logout();
           }),
         ],
       ),
@@ -63,11 +61,11 @@ class _ProfilePageState extends State<ProfilePage> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                children:[
-                  Image.asset(iconPath, width: 25.w, height: 25.w),
-                  SizedBox(width:10.w),
-                  Text(title, style: TextStyle(fontSize: 14.sp))
-                ]
+                  children:[
+                    Image.asset(iconPath, width: 25.w, height: 25.w),
+                    SizedBox(width:10.w),
+                    Text(title, style: TextStyle(fontSize: 14.sp))
+                  ]
               ),
               Image.asset("assets/images/profile/arrow-right-grey.png", width: 15.w, height: 15.w),
             ],
@@ -86,50 +84,50 @@ class _ProfilePageState extends State<ProfilePage> {
       child: GestureDetector(
         behavior: HitTestBehavior.opaque,
         child: Container(
-          width: Get.width, height: 100.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // 左侧
-              Row(
-                children: [
-                  // 头像
-                  ClipRRect(
-                      borderRadius: BorderRadius.circular(40.r),
-                      child:
-                      (Cache.getUserInfo().attachment!=null && Cache.getUserInfo().attachment!.url!=null)
-                          ? Image.network(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+"${Cache.getUserInfo().attachment!.url}", width: 40.w, height: 40.w, fit: BoxFit.cover)
-                          : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)
-                  ),
+            width: Get.width, height: 100.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 左侧
+                Row(
+                  children: [
+                    // 头像
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(40.r),
+                        child:
+                        (Cache.getUserInfo().attachment!=null && Cache.getUserInfo().attachment!.url!=null)
+                            ? Image.network(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+"${Cache.getUserInfo().attachment!.url}", width: 40.w, height: 40.w, fit: BoxFit.cover)
+                            : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)
+                    ),
 
-                  SizedBox(width: 20.h),
+                    SizedBox(width: 20.h),
 
-                  // 用户名和角色
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                        decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.all(Radius.circular(30.r))),
-                        child: Text("${SystemDictUtil.getTextByCode(Cache.getUserInfo().userType.toString())}", style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 10.sp)),
-                      ),
-                      SizedBox(height: 10.h),
-                      Text("${TextUtils.isValid("${Cache.getUserInfo().nickName}") ? Cache.getUserInfo().username : Cache.getUserInfo().nickName}", style: const TextStyle(fontWeight: FontWeight.w700)),
-                    ],
-                  ),
-                ],
-              ),
+                    // 用户名和角色
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                          decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.all(Radius.circular(30.r))),
+                          child: Text("${SystemDictUtil.getTextByCode(Cache.getUserInfo().userType.toString())}", style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 10.sp)),
+                        ),
+                        SizedBox(height: 10.h),
+                        Text("${TextUtils.isValid("${Cache.getUserInfo().nickName}") ? Cache.getUserInfo().username : Cache.getUserInfo().nickName}", style: const TextStyle(fontWeight: FontWeight.w700)),
+                      ],
+                    ),
+                  ],
+                ),
 
-              // 右侧
-              Row(
-                children: [
-                  Text("详情", style: TextStyle( fontSize: 10.sp)),
-                  Image.asset("assets/images/profile/arrow-right-grey.png", width: 10.w, height: 10.w),
-                ],
-              )
-            ],
-          )
+                // 右侧
+                Row(
+                  children: [
+                    Text("详情", style: TextStyle( fontSize: 10.sp)),
+                    Image.asset("assets/images/profile/arrow-right-grey.png", width: 10.w, height: 10.w),
+                  ],
+                )
+              ],
+            )
         ),
         onTap: (){
           // 返回时 更新一下数据
@@ -140,4 +138,3 @@ class _ProfilePageState extends State<ProfilePage> {
   }
 
 }
-
