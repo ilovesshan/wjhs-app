@@ -1,4 +1,5 @@
 import 'package:app/utils/cache.dart';
+import 'package:app/utils/system_dict_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:app/view/home/home_page.dart';
@@ -37,7 +38,7 @@ class _MenuContainerState extends State<MenuContainer> with SingleTickerProvider
   void initState() {
     super.initState();
 
-    if(Cache.getUserInfo().userType == "3"){
+    if(SystemDictUtil.isRecyclingCenterUser()){
       // 回收中心用户没有订单列表权限
       _pageList.removeAt(2);
       _tabBarList.removeAt(2);

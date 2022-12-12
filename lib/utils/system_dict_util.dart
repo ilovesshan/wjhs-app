@@ -14,4 +14,8 @@ class SystemDictUtil {
     SystemDictModel dictModel = Cache.getSystemDict().firstWhere((systemDictModel) => systemDictModel.dictCode == code);
     return TextUtils.isNotValid("${dictModel.dictDescribe}") ? dictModel.dictDescribe : "未知" ;
   }
+
+  static bool isRecyclingCenterUser() {
+    return  Cache.getUserInfo().userType == "3";
+  }
 }
