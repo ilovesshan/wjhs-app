@@ -22,63 +22,23 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(elevation: 0, toolbarHeight: 0, systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
       body: Column(
         children: [
-          Card(
-            elevation: 0.3,
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              child: Container(
-                width: Get.width, height: 100.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // 左侧
-                    Row(
-                      children: [
-                        // 头像
-                        ClipRRect(
-                            borderRadius: BorderRadius.circular(40.r),
-                            child:
-                            (Cache.getUserInfo().attachment!=null && Cache.getUserInfo().attachment!.url!=null)
-                                ? Image.network(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+"${Cache.getUserInfo().attachment!.url}", width: 40.w, height: 40.w, fit: BoxFit.cover)
-                                : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)
-                        ),
+          //用户信息
+          buildUserInfoCard(),
 
-                        SizedBox(width: 20.h),
+          // 账户管理
+          buildProfileCommonItem(title: "账户管理", iconPath: "assets/images/profile/zhanghuguanli.png", onPressed: ()=>{}),
 
-                        // 用户名和角色
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
-                              decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.all(Radius.circular(30.r))),
-                              child: Text("${SystemDictUtil.getTextByCode(Cache.getUserInfo().userType.toString())}", style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 10.sp)),
-                            ),
-                            SizedBox(height: 10.h),
-                            Text("${TextUtils.isValid("${Cache.getUserInfo().nickName}") ? Cache.getUserInfo().username : Cache.getUserInfo().nickName}", style: const TextStyle(fontWeight: FontWeight.w700)),
-                          ],
-                        ),
-                      ],
-                    ),
+          // 历史订单
+          buildProfileCommonItem(title: "历史订单", iconPath: "assets/images/profile/lishidingdan.png", onPressed: ()=>{}),
 
-                    // 右侧
-                    Row(
-                      children: [
-                        Text("详情", style: TextStyle( fontSize: 10.sp)),
-                        const Icon(Icons.chevron_right_sharp, size: 15),
-                      ],
-                    )
-                  ],
-                )
-              ),
-              onTap: (){
-                // 返回时 更新一下数据
-                Get.toNamed(YFRouter.userInfoDetail)!.then((value) =>setState(() {}));
-              },
-            ),
-          ),
-          ElevatedButton(child: const Text("退出登录"),onPressed: () async {
+          // 联系客服
+          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
+
+          // 更改密码
+          buildProfileCommonItem(title: "更改密码", iconPath: "assets/images/profile/genggaimima.png", onPressed: ()=>{}),
+
+          // 退出登录
+          buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
             Cache.removeUserInfo();
             CommonCache.removeId();
             CommonCache.removeUsername();
@@ -90,4 +50,94 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
+
+
+  // 左icon和文字 右边箭头 Widget
+  Widget buildProfileCommonItem({required String title, required String iconPath, required OnPressed onPressed}) {
+    return GestureDetector(
+      child: Card(
+        elevation: 0.2,
+        child: Container(
+          width: Get.width, margin: EdgeInsets.only(bottom: 5.h), height: 40.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                children:[
+                  Image.asset(iconPath, width: 25.w, height: 25.w),
+                  SizedBox(width:10.w),
+                  Text(title, style: TextStyle(fontSize: 14.sp))
+                ]
+              ),
+              Image.asset("assets/images/profile/arrow-right-grey.png", width: 15.w, height: 15.w),
+            ],
+          ),
+        ),
+      ),
+      onTap: ()=> onPressed(),
+    );
+  }
+
+
+  // 用户信息 Widget
+  Widget buildUserInfoCard() {
+    return Card(
+      elevation: 0.3,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+          width: Get.width, height: 100.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // 左侧
+              Row(
+                children: [
+                  // 头像
+                  ClipRRect(
+                      borderRadius: BorderRadius.circular(40.r),
+                      child:
+                      (Cache.getUserInfo().attachment!=null && Cache.getUserInfo().attachment!.url!=null)
+                          ? Image.network(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+"${Cache.getUserInfo().attachment!.url}", width: 40.w, height: 40.w, fit: BoxFit.cover)
+                          : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)
+                  ),
+
+                  SizedBox(width: 20.h),
+
+                  // 用户名和角色
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                        decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.all(Radius.circular(30.r))),
+                        child: Text("${SystemDictUtil.getTextByCode(Cache.getUserInfo().userType.toString())}", style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 10.sp)),
+                      ),
+                      SizedBox(height: 10.h),
+                      Text("${TextUtils.isValid("${Cache.getUserInfo().nickName}") ? Cache.getUserInfo().username : Cache.getUserInfo().nickName}", style: const TextStyle(fontWeight: FontWeight.w700)),
+                    ],
+                  ),
+                ],
+              ),
+
+              // 右侧
+              Row(
+                children: [
+                  Text("详情", style: TextStyle( fontSize: 10.sp)),
+                  Image.asset("assets/images/profile/arrow-right-grey.png", width: 10.w, height: 10.w),
+                ],
+              )
+            ],
+          )
+        ),
+        onTap: (){
+          // 返回时 更新一下数据
+          Get.toNamed(YFRouter.userInfoDetail)!.then((value) =>setState(() {}));
+        },
+      ),
+    );
+  }
+
 }
+
