@@ -102,7 +102,7 @@ class HttpHelper {
           case DioErrorType.response:
             switch (e.response?.statusCode) {
               case 400:
-                EasyLoading.showToast("请求失败: ${e.response!.data.toString()}");
+                EasyLoading.showToast(e.response!.data["message"]);
                 break;
               case 401:
                 EasyLoading.showToast("请求失败: 没有权限");
