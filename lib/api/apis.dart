@@ -19,4 +19,8 @@ class Apis {
 
   // 图片上传接口
   static const String attachment = "/attachments";
+
+  // 回收商品模块
+  static const String recycleGoods = "/recycleGoods";
+
 }

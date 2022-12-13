@@ -39,4 +39,32 @@ class CommonBar {
     return  Image.asset(iconPath, width: 21.w, height: 21.w);
   }
 
+
+  /// 通用搜索框
+  static Container buildCommonSearchBar({required TextEditingController controller, required bool isShowSearch , required OnValueChanged onSubmitted, required VoidCallback onCancel, OnValueChanged? onValueChanged}) {
+    return Container(
+        width: Get.width, height: 39.h, padding: EdgeInsets.symmetric(horizontal: 10.w), margin: EdgeInsets.only(top: 5.h),
+        child: Row(
+          children: [
+            Expanded(
+              child: TextField(
+                style: TextStyle(fontSize: 14.sp), controller: controller, textInputAction: TextInputAction.search,
+                decoration: InputDecoration(
+                    hintText: "输入关键字",
+                    hintStyle: TextStyle(fontSize: 14.sp),
+                    contentPadding: const EdgeInsets.only(top: 0, bottom: 0),
+                    enabledBorder: OutlineInputBorder(borderSide:const BorderSide(color: Color(0XFFFFFFFF), width: 0), borderRadius: BorderRadius.circular(10.r)),
+                    focusedBorder: OutlineInputBorder(borderSide:const BorderSide(color: Color(0XFFFFFFFF), width: 0), borderRadius: BorderRadius.circular(10.r)),
+                    filled: true, fillColor: const Color(0XFFF2F2F2), border: OutlineInputBorder(borderSide:const BorderSide(color: Color(0XFFFFFFFF), width: 0), borderRadius: BorderRadius.circular(10.r)),
+                    prefixIcon: Container(padding: EdgeInsets.all(10.r), child: Image.asset("assets/common/search-black.png", width: 20.w, height: 20.w, fit: BoxFit.fitHeight))
+                ),
+                onSubmitted: (kw)=> onSubmitted(kw),
+                onChanged: (value)=> {if(onValueChanged!=null) onValueChanged(value)},
+              ),
+            ),
+            GestureDetector(child: Container(margin: EdgeInsets.only(left: 10.w), child: Text(!isShowSearch ? "搜索" : "取消", style: TextStyle(fontSize: 14.sp))), onTap: ()=> onCancel())
+          ],
+        )
+    );
+  }
 }
