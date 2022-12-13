@@ -32,13 +32,18 @@ class _ProfilePageState extends State<ProfilePage> {
           // 历史订单
           buildProfileCommonItem(title: "历史订单", iconPath: "assets/images/profile/lishidingdan.png", onPressed: ()=>{}),
 
-          // 联系客服
-          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
 
           // 更改密码
           buildProfileCommonItem(title: "更改密码", iconPath: "assets/images/profile/genggaimima.png", onPressed: (){
             Get.toNamed(YFRouter.updatePassword);
           }),
+
+          // 联系客服
+          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
+
+          // 意见反馈
+          buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: ()=>{}),
+
 
           // 退出登录
           buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
