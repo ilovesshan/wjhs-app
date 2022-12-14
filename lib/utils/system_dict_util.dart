@@ -1,3 +1,5 @@
+import 'package:app/model/system_dict_model.dart';
+import 'package:app/utils/cache.dart';
 import 'package:common_utils/common_utils.dart';
 
 class SystemDictUtil {
@@ -9,7 +11,11 @@ class SystemDictUtil {
 
 
   static String? getTextByCode(String code) {
-    SystemDictModel dictModel = SharedPreferencesDao.getSystemDict().firstWhere((systemDictModel) => systemDictModel.dictCode == code);
+    SystemDictModel dictModel = Cache.getSystemDict().firstWhere((systemDictModel) => systemDictModel.dictCode == code);
     return TextUtils.isNotValid("${dictModel.dictDescribe}") ? dictModel.dictDescribe : "未知" ;
+  }
+
+  static bool isRecyclingCenterUser() {
+    return  Cache.getUserInfo().userType == "3";
   }
 }

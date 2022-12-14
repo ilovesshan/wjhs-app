@@ -1,4 +1,5 @@
 import 'package:app/api/apis.dart';
+import 'package:app/model/system_dict_model.dart';
 import 'package:common_utils/common_utils.dart';
 
 class SystemDictService {

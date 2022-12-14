@@ -1,6 +1,9 @@
 import 'dart:io';
 
 import 'package:app/router/router.dart';
+import 'package:app/service/user_service.dart';
+import 'package:app/utils/cache.dart';
+import 'package:app/utils/system_dict_util.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -15,75 +18,128 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   @override
-  void initState() {
-    super.initState();
-    _initFluwx();
-  }
-
-  Future _initFluwx() async {
-    await WxUtil.init();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-          elevation: 0,
-          systemOverlayStyle: const SystemUiOverlayStyle(
-              statusBarIconBrightness: Brightness.light)),
+      appBar: AppBar(elevation: 0, toolbarHeight: 0, systemOverlayStyle: const SystemUiOverlayStyle(statusBarIconBrightness: Brightness.light)),
       body: Column(
         children: [
-          ElevatedButton(
-            onPressed: () async {
-              final wxInstalled = await WxUtil.wxIsInstalled();
-              if (!wxInstalled) {
-                EasyLoading.showToast("未安装微信");
-                return;
-              }
-            },
-            child: const Text("微信分享"),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              Share.share('https://www.google.com/', subject: "");
-            },
-            child: const Text("分享"),
-          ),
+          //用户信息
+          buildUserInfoCard(),
 
-          Container(
-            width: 200.w, height: 200.h, color: Colors.blue,
-            child: QrImage(
-              data: "http://www.ilovesshan.com/?payId=w8g123!@#",
-              version: QrVersions.auto,
-              size: 200.0,
-            ),
-          ),
+          // 账户管理
+          buildProfileCommonItem(title: "账户管理", iconPath: "assets/images/profile/zhanghuguanli.png", onPressed: ()=>{}),
 
-          ElevatedButton(child: const Text("唤起高德地图"),onPressed: () async {
-            // 104.08,30.65 春熙路太古里步行街
-            await MapNavigationUtil.gotoGaoDeMap("104.08","30.65");
+          // 历史订单
+          buildProfileCommonItem(title: "历史订单", iconPath: "assets/images/profile/lishidingdan.png", onPressed: ()=>{}),
+
+
+          // 更改密码
+          buildProfileCommonItem(title: "更改密码", iconPath: "assets/images/profile/genggaimima.png", onPressed: (){
+            Get.toNamed(YFRouter.updatePassword);
           }),
 
-          ElevatedButton(child: const Text("唤起百度地图"),onPressed: () async {
-            // 104.086002,30.659204 春熙路太古里步行街
-            await MapNavigationUtil.gotoTencentMap("104.086002","30.659204");
-          }),
+          // 联系客服
+          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
 
-          ElevatedButton(child: const Text("唤起腾讯地图"),onPressed: () async {
-            // 30.6555,104.07721 春熙路太古里步行街
-            await MapNavigationUtil.gotoBaiduMap("104.07721","30.6555");
-          }),
+          // 意见反馈
+          buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: ()=>{}),
 
-          ElevatedButton(child: const Text("退出登录"),onPressed: () async {
-            SharedPreferencesDao.removeUserInfo();
-            SharedPreferencesDao.removeId();
-            SharedPreferencesDao.removeUsername();
-            SharedPreferencesDao.removePassword();
-            SharedPreferencesDao.removeToken();
-            Get.offAndToNamed(YFRouter.login);
+
+          // 退出登录
+          buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
+            UserService.logout();
           }),
         ],
       ),
     );
   }
+
+
+  // 左icon和文字 右边箭头 Widget
+  Widget buildProfileCommonItem({required String title, required String iconPath, required OnPressed onPressed}) {
+    return GestureDetector(
+      child: Card(
+        elevation: 0.2,
+        child: Container(
+          width: Get.width, margin: EdgeInsets.only(bottom: 5.h), height: 40.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Row(
+                  children:[
+                    Image.asset(iconPath, width: 25.w, height: 25.w),
+                    SizedBox(width:10.w),
+                    Text(title, style: TextStyle(fontSize: 14.sp))
+                  ]
+              ),
+              Image.asset("assets/images/profile/arrow-right-grey.png", width: 15.w, height: 15.w),
+            ],
+          ),
+        ),
+      ),
+      onTap: ()=> onPressed(),
+    );
+  }
+
+
+  // 用户信息 Widget
+  Widget buildUserInfoCard() {
+    return Card(
+      elevation: 0.3,
+      child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
+        child: Container(
+            width: Get.width, height: 100.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                // 左侧
+                Row(
+                  children: [
+                    // 头像
+                    ClipRRect(
+                        borderRadius: BorderRadius.circular(40.r),
+                        child:
+                        (Cache.getUserInfo().attachment!=null && Cache.getUserInfo().attachment!.url!=null)
+                            ? Image.network(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+"${Cache.getUserInfo().attachment!.url}", width: 40.w, height: 40.w, fit: BoxFit.cover)
+                            : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)
+                    ),
+
+                    SizedBox(width: 20.h),
+
+                    // 用户名和角色
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                          padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h),
+                          decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.all(Radius.circular(30.r))),
+                          child: Text("${SystemDictUtil.getTextByCode(Cache.getUserInfo().userType.toString())}", style: TextStyle(color: const Color(0xFFFFFFFF), fontSize: 10.sp)),
+                        ),
+                        SizedBox(height: 10.h),
+                        Text("${TextUtils.isValid("${Cache.getUserInfo().nickName}") ? Cache.getUserInfo().username : Cache.getUserInfo().nickName}", style: const TextStyle(fontWeight: FontWeight.w700)),
+                      ],
+                    ),
+                  ],
+                ),
+
+                // 右侧
+                Row(
+                  children: [
+                    Text("详情", style: TextStyle( fontSize: 10.sp)),
+                    Image.asset("assets/images/profile/arrow-right-grey.png", width: 10.w, height: 10.w),
+                  ],
+                )
+              ],
+            )
+        ),
+        onTap: (){
+          // 返回时 更新一下数据
+          Get.toNamed(YFRouter.userInfoDetail)!.then((value) =>setState(() {}));
+        },
+      ),
+    );
+  }
+
 }

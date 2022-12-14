@@ -44,7 +44,7 @@ class HttpHelper {
         /// 统一处理：请求时需要携带Token
         Map<String, String> tokenMap = {
           /// 格式需要和后端配合
-          "Authorization": "Bearer " + TextUtils.isValidWith(SharedPreferencesDao.getToken().toString(), ""),
+          "Authorization": "Bearer " + TextUtils.isValidWith(CommonCache.getToken().toString(), ""),
         };
 
         /// 公共请求头
@@ -102,7 +102,7 @@ class HttpHelper {
           case DioErrorType.response:
             switch (e.response?.statusCode) {
               case 400:
-                EasyLoading.showToast("请求失败: ${e.response!.data.toString()}");
+                EasyLoading.showToast(e.response!.data["message"]);
                 break;
               case 401:
                 EasyLoading.showToast("请求失败: 没有权限");

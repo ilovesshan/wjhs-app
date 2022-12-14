@@ -1,8 +1,11 @@
 import 'dart:math';
 
 import 'package:app/model/user_auth_model.dart';
+import 'package:app/model/user_info_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/login_service.dart';
+import 'package:app/service/user_service.dart';
+import 'package:app/utils/cache.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:common_utils/common_utils.dart';
@@ -24,8 +27,8 @@ class _SplashPageState extends State<SplashPage> {
 
      Future.delayed( const Duration(milliseconds: 2000),() async {
        // 判断是否能自动登录
-       String username = SharedPreferencesDao.getUsername();
-       String password = SharedPreferencesDao.getPassWord();
+       String username = CommonCache.getUsername();
+       String password = CommonCache.getPassWord();
        if(TextUtils.isNotValid(username) && TextUtils.isNotValid(password)){
          // 实现自动登录功能
          try {
@@ -33,14 +36,14 @@ class _SplashPageState extends State<SplashPage> {
            final UserAuthModel userAuthModel = await LoginService.requestUserAuth(username, password);
            if(TextUtils.isNotValid(userAuthModel.id.toString())){
              // 获取用户信息
-             final UserInfoModel userInfoModel = await LoginService.requestUserInfo("${userAuthModel.id}");
+             final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
              if(TextUtils.isNotValid(userAuthModel.id.toString())){
                // 持久化信息
-               SharedPreferencesDao.saveUserInfo(userInfoModel);
-               SharedPreferencesDao.saveId("${userAuthModel.id}");
-               SharedPreferencesDao.saveUsername(username);
-               SharedPreferencesDao.savePassword(password);
-               SharedPreferencesDao.saveToken("${userAuthModel.token}");
+               Cache.saveUserInfo(userInfoModel);
+               CommonCache.saveId("${userAuthModel.id}");
+               CommonCache.saveUsername(username);
+               CommonCache.savePassword(password);
+               CommonCache.saveToken("${userAuthModel.token}");
                // 去首页
                Get.offAndToNamed(YFRouter.menuContainer);
              }

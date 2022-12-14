@@ -1,7 +1,11 @@
+import 'package:app/model/system_dict_model.dart';
 import 'package:app/model/user_auth_model.dart';
+import 'package:app/model/user_info_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/login_service.dart';
 import 'package:app/service/system_dict_service.dart';
+import 'package:app/service/user_service.dart';
+import 'package:app/utils/cache.dart';
 import 'package:app/utils/system_dict_util.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -109,20 +113,20 @@ class _LoginPageState extends State<LoginPage> {
     final UserAuthModel userAuthModel = await LoginService.requestUserAuth(account, password);
     if(TextUtils.isNotValid(userAuthModel.id.toString())){
       // 获取用户信息
-      SharedPreferencesDao.saveToken("${userAuthModel.token}");
+      CommonCache.saveToken("${userAuthModel.token}");
 
-      final UserInfoModel userInfoModel = await LoginService.requestUserInfo("${userAuthModel.id}");
+      final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
       if(TextUtils.isNotValid(userAuthModel.id.toString())){
         // 持久化信息
-        SharedPreferencesDao.saveUserInfo(userInfoModel);
-        SharedPreferencesDao.saveId("${userAuthModel.id}");
-        SharedPreferencesDao.saveUsername(account);
-        SharedPreferencesDao.savePassword(password);
+        Cache.saveUserInfo(userInfoModel);
+        CommonCache.saveId("${userAuthModel.id}");
+        CommonCache.saveUsername(account);
+        CommonCache.savePassword(password);
 
         // 请求数据字典表
-        if(SharedPreferencesDao.getSystemDict().isEmpty){
+        if(Cache.getSystemDict().isEmpty){
           final List<SystemDictModel> systemDictModel = await SystemDictService.requestSystemDict();
-          SharedPreferencesDao.saveSystemDict(systemDictModel);
+          Cache.saveSystemDict(systemDictModel);
         }
 
         // 做一次权限校验 只允骑手/回收中心用户登录

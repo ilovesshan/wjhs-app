@@ -3,6 +3,8 @@ import 'package:app/view/home/pages/notice_detail_page.dart';
 import 'package:app/view/login/login_page.dart';
 import 'package:app/view/login/splash_page.dart';
 import 'package:app/view/menu_container.dart';
+import 'package:app/view/profile/pages/update_password_page.dart';
+import 'package:app/view/profile/pages/user_info_detail_page.dart';
 import 'package:common_utils/common_utils.dart';
 
 class YFRouter {
@@ -12,6 +14,8 @@ class YFRouter {
   static const String chooseAddress = "/chooseAddress";
   static const String noticeDetail = "/noticeDetail";
   static const String webviewPlugin = "/webviewPlugin";
+  static const String userInfoDetail = "/userInfoDetail";
+  static const String updatePassword = "/updatePassword";
 
   static List<GetPage> routes() {
     return [
@@ -21,6 +25,8 @@ class YFRouter {
       GetPage(name: chooseAddress, page: () => const ChooseAddressPage()),
       GetPage(name: noticeDetail, page: () => const NoticeDetailPage()),
       GetPage(name: webviewPlugin, page: () => WebviewPluginPage()),
+      GetPage(name: userInfoDetail, page: () => const UserInfoDetailPage()),
+      GetPage(name: updatePassword, page: () => const UpdatePasswordPage()),
     ];
   }
 

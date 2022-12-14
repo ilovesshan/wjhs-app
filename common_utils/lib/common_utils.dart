@@ -38,10 +38,8 @@ export 'src/types/types.dart';
 
 /// 模型
 export 'src/mode/event_bus_call_back_model.dart';
-export 'src/mode/user_info_model.dart';
 export 'src/mode/common_bottom_sheet_result_model.dart';
 export 'src/mode/gaode_pois_model.dart';
-export 'src/mode/system_dict_model.dart';
 
 /// 网络请求相关
 export 'src/service_utils/http_helper.dart';
@@ -83,7 +81,7 @@ export 'src/utils/log_util.dart';
 export 'src/utils/color_util.dart';
 export 'src/utils/text_util.dart';
 export 'src/utils/image_picker_util.dart';
-export 'src/utils/shared_preferences_util.dart';
+export 'src/utils/common_cache.dart';
 export 'src/utils/file_saver_util.dart';
 export 'src/utils/time_util.dart';
 export 'src/utils/event_bus_util.dart';
