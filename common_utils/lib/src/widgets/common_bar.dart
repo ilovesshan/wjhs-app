@@ -48,10 +48,10 @@ class CommonBar {
           children: [
             Expanded(
               child: TextField(
-                style: TextStyle(fontSize: 14.sp), controller: controller, textInputAction: TextInputAction.search,
+                style: TextStyle(fontSize: 12.sp), controller: controller, textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
                     hintText: "输入关键字",
-                    hintStyle: TextStyle(fontSize: 14.sp),
+                    hintStyle: TextStyle(fontSize: 12.sp),
                     contentPadding: const EdgeInsets.only(top: 0, bottom: 0),
                     enabledBorder: OutlineInputBorder(borderSide:const BorderSide(color: Color(0XFFFFFFFF), width: 0), borderRadius: BorderRadius.circular(10.r)),
                     focusedBorder: OutlineInputBorder(borderSide:const BorderSide(color: Color(0XFFFFFFFF), width: 0), borderRadius: BorderRadius.circular(10.r)),
@@ -62,7 +62,7 @@ class CommonBar {
                 onChanged: (value)=> {if(onValueChanged!=null) onValueChanged(value)},
               ),
             ),
-            GestureDetector(child: Container(margin: EdgeInsets.only(left: 10.w), child: Text(!isShowSearch ? "搜索" : "取消", style: TextStyle(fontSize: 14.sp))), onTap: ()=> onCancel())
+            GestureDetector(child: Container(margin: EdgeInsets.only(left: 10.w), child: Text(!isShowSearch ? "搜索" : "取消", style: TextStyle(fontSize: 12.sp))), onTap: ()=> onCancel())
           ],
         )
     );

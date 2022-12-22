@@ -23,4 +23,10 @@ class Apis {
   // 回收商品模块
   static const String recycleGoods = "/recycleGoods";
 
+  // 查询骑手相关订单信息
+  static const String driverRecycleGoodsOrder = "/recycleOrders/driver";
+
+  // 订单信息
+  static const String recycleGoodsOrder = "/recycleOrders";
+
 }

@@ -6,6 +6,11 @@ import 'package:get/get.dart';
 class CommonDialog {
   static void showConfirmDialog(BuildContext context, { required String title, required Function onConfirm, required Function onCancel, String cancelText = "取消", String confirmText = "确定"}){
     return BrnDialogManager.showConfirmDialog(context,
+        themeData: BrnDialogConfig(
+            titleTextStyle: BrnTextStyle(fontSize: 14),
+            mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
+            assistActionsTextStyle: BrnTextStyle(fontSize: 12),
+        ),
         title: title,
         cancel: cancelText,
         confirm: confirmText,
