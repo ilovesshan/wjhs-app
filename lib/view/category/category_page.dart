@@ -122,7 +122,7 @@ class _AppointmentPageState extends State<CategoryPage> with AutomaticKeepAliveC
                             child: Row(
                               children: [
                                 // 回收商品图片
-                                FadeInImage.assetNetwork(placeholder: "assets/common/loading.png", image: _baseUrl +"${recycleGood.attachment!.url}", width: 90.w, height: 90.w, fit:BoxFit.fill),
+                                ClipRRect(borderRadius: BorderRadius.circular(5.r), child: FadeInImage.assetNetwork(placeholder: "assets/common/loading.png", image: _baseUrl +"${recycleGood.attachment!.url}", width: 90.w, height: 90.w, fit:BoxFit.fill)),
                                 SizedBox(width: 10.w),
                                 // 回收商品详细信息
                                 Column(
