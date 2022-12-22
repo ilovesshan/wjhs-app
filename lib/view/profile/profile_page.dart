@@ -61,18 +61,18 @@ class _ProfilePageState extends State<ProfilePage> {
       child: Card(
         elevation: 0.2,
         child: Container(
-          width: Get.width, margin: EdgeInsets.only(bottom: 5.h), height: 40.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
+          width: Get.width, margin: EdgeInsets.only(bottom: 5.h), height: 30.h, padding: EdgeInsets.symmetric(horizontal: 15.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Row(
-                  children:[
-                    Image.asset(iconPath, width: 25.w, height: 25.w),
-                    SizedBox(width:10.w),
-                    Text(title, style: TextStyle(fontSize: 14.sp))
-                  ]
+                children:[
+                  Image.asset(iconPath, width: 20.w, height: 20.w),
+                  SizedBox(width:10.w),
+                  Text(title, style: TextStyle(fontSize: 12.sp))
+                ]
               ),
-              Image.asset("assets/images/profile/arrow-right-grey.png", width: 15.w, height: 15.w),
+              Image.asset("assets/images/profile/arrow-right-grey.png", width: 10.w, height: 10.w),
             ],
           ),
         ),
@@ -141,5 +141,4 @@ class _ProfilePageState extends State<ProfilePage> {
       ),
     );
   }
-
 }
