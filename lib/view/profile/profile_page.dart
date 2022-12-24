@@ -38,16 +38,20 @@ class _ProfilePageState extends State<ProfilePage> {
             Get.toNamed(YFRouter.updatePassword);
           }),
 
+          // 推广应用
+          buildProfileCommonItem(title: "推广应用", iconPath: "assets/images/profile/fenxiangxiao.png", onPressed: (){
+            Share.share('https://www.ilovesshan/wjhsapp', subject: "");
+          }),
+
+          // 隐私政策
+          buildProfileCommonItem(title: "隐私政策", iconPath: "assets/images/profile/yinsizhengce.png", onPressed: (){}),
+
           // 联系客服
           buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
 
           // 意见反馈
           buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: ()=>{}),
 
-          // 推广应用
-          buildProfileCommonItem(title: "推广应用", iconPath: "assets/images/profile/fenxiangxiao.png", onPressed: (){
-            Share.share('https://www.ilovesshan/wjhsapp', subject: "");
-          }),
 
           // 退出登录
           buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
