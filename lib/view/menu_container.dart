@@ -44,41 +44,6 @@ class _MenuContainerState extends State<MenuContainer> with SingleTickerProvider
       _tabBarList.removeAt(2);
       setState(() {});
     }
-
-    ///创建 JPush
-    JPush jpush = new JPush();
-    ///配置应用 Key
-    jpush.setup(
-      appKey: "替换成你自己的 appKey",
-      channel: "theChannel",
-      production: false,
-      /// 设置是否打印 debug 日志
-      debug: true,
-    );
-
-    try {
-      jpush.addEventHandler(
-        onReceiveNotification: (Map<String, dynamic> message) async {
-          print("flutter onReceiveNotification: $message");
-        },
-
-        onOpenNotification: (Map<String, dynamic> message) async {
-          print("flutter onOpenNotification: $message");
-        },
-
-        onReceiveMessage: (Map<String, dynamic> message) async {
-          print("flutter onReceiveMessage: $message");
-        },
-
-        onReceiveNotificationAuthorization: (Map<String, dynamic> message) async {
-          print("flutter onReceiveNotificationAuthorization: $message");
-        },
-
-        onNotifyMessageUnShow: (Map<String, dynamic> message) async {
-          print("flutter onNotifyMessageUnShow: $message");
-        });
-      } on PlatformException {}
-
     _tabController = TabController(vsync: this, length: _pageList.length);
   }
 

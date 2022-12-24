@@ -1,6 +1,9 @@
+import 'package:app/native_channel/notice_channel.dart';
 import 'package:app/router/router.dart';
+import 'package:app/utils/jpush_util.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 void main() {
   runApp(const Application());
@@ -14,6 +17,17 @@ class Application extends StatefulWidget {
 }
 
 class _ApplicationState extends State<Application> {
+
+  @override
+  void initState() {
+    super.initState();
+    // 初始化 flutter和原生Android端通信通道
+    NoticeChannel.initChannels();
+
+    // 初始化 极光推送
+    JPushUtil.initJPush();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

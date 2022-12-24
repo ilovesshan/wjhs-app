@@ -1,4 +1,5 @@
 import 'package:app/model/order_model.dart';
+import 'package:app/native_channel/notice_channel.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/order_service.dart';
 import 'package:app/utils/system_dict_util.dart';
@@ -142,9 +143,10 @@ class _InProgressState extends State<InProgress> with SingleTickerProviderStateM
                                           final isSuccess = await RecycleOrderService.orderPay(ids[2]);
                                           if(isSuccess){
                                             // 成功
+                                            NoticeChannel.notice();
                                             Get.snackbar("订单信息", "订单结算成功啦, 去任务大厅逛逛吧！");
                                             vm.type = "1";
-                                            vm.status = "5";
+                                            vm.status = (_currentIndex == 0 ? "5" : "6");
                                             vm.initData();
                                           }else{
                                             // 失败

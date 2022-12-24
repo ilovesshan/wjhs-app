@@ -1,4 +1,5 @@
 import 'package:app/model/order_model.dart';
+import 'package:app/native_channel/notice_channel.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/order_service.dart';
 import 'package:app/utils/system_dict_util.dart';
@@ -71,6 +72,7 @@ class _MissionHallState extends State<MissionHall> {
                               CommonDialog.showConfirmDialog(context, title: "确定要进行本单任务吗?", onConfirm: () async {
                                 final isSuccess = await RecycleOrderService.updateOrderState("${orderModel.id}", "5");
                                 if(isSuccess){
+                                  NoticeChannel.notice();
                                   Get.snackbar("订单信息", "一条新订单创建成功啦！");
                                   // 刷新界面
                                   vm.type = "3";
