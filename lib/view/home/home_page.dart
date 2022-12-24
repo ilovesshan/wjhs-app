@@ -3,6 +3,7 @@ import 'package:app/model/swiper_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/notice_service.dart';
 import 'package:app/service/swiper_service.dart';
+import 'package:app/utils/system_dict_util.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -111,6 +112,110 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               ],
             ),
           ),
+
+          // 回收统计
+          Container(
+            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
+            child: Column(
+              children: [
+                // 标题 和 回收次数
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("回收统计", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                    Text("累计： 0次", style: TextStyle(fontSize: 12.sp)),
+                  ]
+                ),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    // 本月贡献
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("本月回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                            SizedBox(height: 10.h),
+                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // 累计贡献
+                    Expanded(
+                      flex: 1,
+                      child:Container(
+                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("累计回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                            SizedBox(height: 10.h),
+                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+
+          // 我的贡献
+          SystemDictUtil.isRecyclingCenterUser() ? const SizedBox() :Container(
+            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
+            child: Column(
+              children: [
+                // 标题 和 回收次数
+                Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("我的贡献", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                      Text("累计： 0次", style: TextStyle(fontSize: 12.sp)),
+                    ]
+                ),
+                Flex(
+                  direction: Axis.horizontal,
+                  children: [
+                    // 本月贡献
+                    Expanded(
+                      flex: 1,
+                      child: Container(
+                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("本月贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                            SizedBox(height: 10.h),
+                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    ),
+                    // 累计贡献
+                    Expanded(
+                      flex: 1,
+                      child:Container(
+                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("累计贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                            SizedBox(height: 10.h),
+                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                          ],
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -128,7 +233,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
         String itemStr = loopList[index];
         //通常可以是一个 Text文本
         return GestureDetector(
-          child: Tooltip(message: itemStr, child: Text(itemStr, overflow: TextOverflow.ellipsis)),
+          child: Tooltip(message: itemStr, child: Text(itemStr,overflow: TextOverflow.ellipsis, style: TextStyle(fontSize: 13.sp, height: 1.5))),
           onTap: ()=> { if(onItemPressed != null)onItemPressed(index)}
         );
       },
