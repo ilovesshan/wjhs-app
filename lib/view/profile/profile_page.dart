@@ -44,6 +44,10 @@ class _ProfilePageState extends State<ProfilePage> {
           // 意见反馈
           buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: ()=>{}),
 
+          // 推广应用
+          buildProfileCommonItem(title: "推广应用", iconPath: "assets/images/profile/fenxiangxiao.png", onPressed: (){
+            Share.share('https://www.ilovesshan/wjhsapp', subject: "");
+          }),
 
           // 退出登录
           buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){

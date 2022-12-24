@@ -12,7 +12,7 @@ class CommonRow extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(title +"：", style: TextStyle(fontSize: 12.sp)),
-        Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 12.sp))),
+        Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 12.sp, height: 1.4))),
       ]
     );
   }

@@ -29,4 +29,7 @@ class Apis {
   // 订单信息
   static const String recycleGoodsOrder = "/recycleOrders";
 
+  // 支付订单
+  static const String recycleGoodsPay= "/recycleOrders/pay";
+
 }

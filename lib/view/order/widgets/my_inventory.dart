@@ -9,22 +9,22 @@ import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-class MissionHall extends StatefulWidget {
-  const MissionHall({Key? key}) : super(key: key);
+class MyInventory extends StatefulWidget {
+  const MyInventory({Key? key}) : super(key: key);
 
   @override
-  State<MissionHall> createState() => _MissionHallState();
+  State<MyInventory> createState() => _MyInventoryState();
 }
 
-class _MissionHallState extends State<MissionHall> {
+class _MyInventoryState extends State<MyInventory> {
 
   @override
   Widget build(BuildContext context) {
     return BaseView<OrderViewModel>(
       mode: OrderViewModel(),
       onReady: (model){
-        model.type = "3";
-        model.status = "";
+        model.type = "1";
+        model.status = "7";
         model.initData();
       },
       child: const SizedBox(),
@@ -49,11 +49,11 @@ class _MissionHallState extends State<MissionHall> {
                     children: [
                       SizedBox(height: 3.h),
                       Row(
-                        crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          SizedBox(width: 200.w, child: CommonRow(title: "商品重量", value: "${orderModel.totalWeight}")),
-                          BrnTagCustom(tagText: SystemDictUtil.getTextByCode("${orderModel.status}")!, backgroundColor: Get.theme.primaryColor, tagBorderRadius: const BorderRadius.only(topRight: Radius.circular(5)),)
-                        ]
+                          crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            SizedBox(width: 200.w, child: CommonRow(title: "商品重量", value: "${orderModel.totalWeight}")),
+                            BrnTagCustom(tagText: SystemDictUtil.getTextByCode("${orderModel.status}")!, backgroundColor: Get.theme.primaryColor, tagBorderRadius: const BorderRadius.only(topRight: Radius.circular(5)),)
+                          ]
                       ),
                       SizedBox(height: 3.h),
                       CommonRow(title: "商品价格", value: "${orderModel.tradingMoney}"),
@@ -62,23 +62,16 @@ class _MissionHallState extends State<MissionHall> {
                       SizedBox(height: 3.h),
                       CommonRow(title: "上门地址", value:address),
                       SizedBox(height: 3.h),
+                      CommonRow(title: "订单编号", value: "${orderModel.id}"),
+                      SizedBox(height: 3.h),
                       Container(
                         decoration: const BoxDecoration(border: Border(top: BorderSide(color: Color(0xffefefef)))), padding: EdgeInsets.only(top: 5.h),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            MiniButton(text: "抢单", icon: Icons.add, color: Colors.red, onPressed: (){
-                              CommonDialog.showConfirmDialog(context, title: "确定要进行本单任务吗?", onConfirm: () async {
-                                final isSuccess = await RecycleOrderService.updateOrderState("${orderModel.id}", "5");
-                                if(isSuccess){
-                                  Get.snackbar("订单信息", "一条新订单创建成功啦！");
-                                  // 刷新界面
-                                  vm.type = "3";
-                                  vm.status = "";
-                                  vm.initData();
-                                }else{
-                                  EasyLoading.showToast("抢单失败,请稍后再试");
-                                }
+                            MiniButton(text: "送至回收中心", icon: Icons.add_to_drive, color: Colors.red, onPressed: (){
+                              CommonDialog.showConfirmDialog(context, title: "确定将当前货物送至回收中心吗?", onConfirm: () async {
+
                               }, onCancel: ()=>{});
                             }),
                           ],
@@ -87,11 +80,7 @@ class _MissionHallState extends State<MissionHall> {
                     ],
                   ),
                 ),
-                onTap: ()=> Get.toNamed(YFRouter.orderDetail,arguments: {"orderId": orderModel.id})!.then((value){
-                  vm.type = "3";
-                  vm.status = "";
-                  vm.initData();
-                }),
+                onTap: ()=> Get.toNamed(YFRouter.orderDetail,arguments: {"orderId": orderModel.id}),
               );
             }),
           ),

@@ -1,5 +1,6 @@
 import 'package:app/view/order/widgets/in_progress.dart';
 import 'package:app/view/order/widgets/mission_hall.dart';
+import 'package:app/view/order/widgets/my_inventory.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -14,9 +15,13 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> with SingleTickerProviderStateMixin {
 
-  final List<Widget> _pages = [const InProgress(), const MissionHall()];
+  final List<Widget> _pages = [const InProgress(), const MissionHall(), const MyInventory()];
 
-  final List<Widget> _tabs = [Padding(padding: EdgeInsets.all(5.w), child: const Text("进行中")), Padding(padding: EdgeInsets.all(5.w), child: const Text("任务大厅"))];
+  final List<Widget> _tabs = [
+    Padding(padding: EdgeInsets.all(5.w), child: const Text("进行中")),
+    Padding(padding: EdgeInsets.all(5.w), child: const Text("任务大厅")),
+    Padding(padding: EdgeInsets.all(5.w), child: const Text("我的库存")),
+  ];
 
   late TabController _tabController;
 

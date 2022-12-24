@@ -129,7 +129,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
       crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text(title +"：", style: TextStyle(fontSize: 13.sp)),
-        Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 13.sp))),
+        Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 13.sp, height: 1.4))),
       ]
     );
   }

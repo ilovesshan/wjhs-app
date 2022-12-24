@@ -19,6 +19,7 @@ class MiniButton extends StatelessWidget {
         child: Row(
           children: [
             Icon(icon, color: const Color(0xffffffff), size: 15),
+            SizedBox(width: 3.w),
             Text(text,style: TextStyle(fontSize: 12.sp, color: const Color(0xffffffff)))
           ],
         ),
