@@ -19,7 +19,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.showWidthPrimaryTheme("订单详情"),
+      appBar: NavBar.show("订单详情"),
       body:  BaseView<OrderDetailViewModel>(
         mode: OrderDetailViewModel(),
         onReady: (model){

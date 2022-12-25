@@ -14,7 +14,7 @@ class _NoticeDetailPageState extends State<NoticeDetailPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: NavBar.showWidthPrimaryTheme("${notice.title}"),
+      appBar: NavBar.show("${notice.title}"),
       body: Padding(padding: EdgeInsets.all(10.w), child: Text("${notice.subTitle}")),
     );
   }
