@@ -32,4 +32,8 @@ class Apis {
   // 支付订单
   static const String recycleGoodsPay= "/recycleOrders/pay";
 
+
+  // 查询余额和流水记录
+  static const String balanceAndRecord= "/accounts";
+
 }

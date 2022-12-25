@@ -4,6 +4,7 @@ import 'package:app/view/login/login_page.dart';
 import 'package:app/view/login/splash_page.dart';
 import 'package:app/view/menu_container.dart';
 import 'package:app/view/order/pages/order_detail_page.dart';
+import 'package:app/view/profile/pages/account_management_page.dart';
 import 'package:app/view/profile/pages/update_password_page.dart';
 import 'package:app/view/profile/pages/user_info_detail_page.dart';
 import 'package:common_utils/common_utils.dart';
@@ -18,6 +19,7 @@ class YFRouter {
   static const String userInfoDetail = "/userInfoDetail";
   static const String updatePassword = "/updatePassword";
   static const String orderDetail = "/orderDetail";
+  static const String accountManagement = "/accountManagement";
 
   static List<GetPage> routes() {
     return [
@@ -30,6 +32,7 @@ class YFRouter {
       GetPage(name: userInfoDetail, page: () => const UserInfoDetailPage()),
       GetPage(name: updatePassword, page: () => const UpdatePasswordPage()),
       GetPage(name: orderDetail, page: () => const OrderDetailPage()),
+      GetPage(name: accountManagement, page: () => const AccountManagementPage()),
     ];
   }
 

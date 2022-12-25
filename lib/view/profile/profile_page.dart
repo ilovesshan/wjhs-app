@@ -27,10 +27,14 @@ class _ProfilePageState extends State<ProfilePage> {
           buildUserInfoCard(),
 
           // 账户管理
-          buildProfileCommonItem(title: "账户管理", iconPath: "assets/images/profile/zhanghuguanli.png", onPressed: ()=>{}),
+          buildProfileCommonItem(title: "我的账户", iconPath: "assets/images/profile/zhanghuguanli.png", onPressed: (){
+            Get.toNamed(YFRouter.accountManagement);
+          }),
 
           // 历史订单
-          buildProfileCommonItem(title: "历史订单", iconPath: "assets/images/profile/lishidingdan.png", onPressed: ()=>{}),
+          buildProfileCommonItem(title: "历史订单", iconPath: "assets/images/profile/lishidingdan.png", onPressed: (){
+            BrnToast.show("功能还未上线，敬请期待！", context);
+          }),
 
 
           // 更改密码
@@ -44,14 +48,19 @@ class _ProfilePageState extends State<ProfilePage> {
           }),
 
           // 隐私政策
-          buildProfileCommonItem(title: "隐私政策", iconPath: "assets/images/profile/yinsizhengce.png", onPressed: (){}),
+          buildProfileCommonItem(title: "隐私政策", iconPath: "assets/images/profile/yinsizhengce.png", onPressed: (){
+            BrnToast.show("功能还未上线，敬请期待！", context);
+          }),
 
           // 联系客服
-          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: ()=>{}),
+          buildProfileCommonItem(title: "联系客服", iconPath: "assets/images/profile/lianxikefu.png", onPressed: (){
+            BrnToast.show("功能还未上线，敬请期待！", context);
+          }),
 
           // 意见反馈
-          buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: ()=>{}),
-
+          buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: (){
+            BrnToast.show("功能还未上线，敬请期待！", context);
+          }),
 
           // 退出登录
           buildProfileCommonItem(title: "退出登录", iconPath: "assets/images/profile/tuichudenglu.png", onPressed: (){
