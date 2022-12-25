@@ -6,6 +6,7 @@ import 'package:app/service/user_service.dart';
 import 'package:app/utils/cache.dart';
 import 'package:app/utils/system_dict_util.dart';
 import 'package:app/view/profile/widgets/common_user_info_item.dart';
+import 'package:app/widget/common_bottom_button.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -53,14 +54,14 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
            Column(children: [CommonUserInfoItem.buildUserInfoItem("用户名", TextField(
              textAlign: TextAlign.end,
              controller: _usernameController,
-             style: TextStyle(fontSize: 14.sp),
-             decoration: InputDecoration(hintText: "请输入用户名", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
+             style: TextStyle(fontSize: 12.sp),
+             decoration: InputDecoration(hintText: "请输入用户名", hintStyle: TextStyle(fontSize: 10.sp, color: Colors.grey), border: InputBorder.none,),
            )),
              CommonUserInfoItem.buildUserInfoItem("昵称", TextField(
                textAlign: TextAlign.end,
                controller: _nickNameController,
-               style: TextStyle(fontSize: 14.sp),
-               decoration: InputDecoration(hintText: "请输入昵称", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
+               style: TextStyle(fontSize: 12.sp),
+               decoration: InputDecoration(hintText: "请输入昵称", hintStyle: TextStyle(fontSize: 10.sp, color: Colors.grey), border: InputBorder.none,),
              )),
              CommonUserInfoItem.buildUserInfoItem("头像",buildUserAvatar(),
              ),
@@ -90,35 +91,32 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
              CommonUserInfoItem.buildUserInfoItem("手机号", TextField(
                textAlign: TextAlign.end,
                controller: _phoneController,
-               style: TextStyle(fontSize: 14.sp),
-               decoration: InputDecoration(hintText: "请输入手机号", hintStyle: TextStyle(fontSize: 12.sp, color: Colors.grey), border: InputBorder.none,),
+               style: TextStyle(fontSize: 12.sp),
+               decoration: InputDecoration(hintText: "请输入手机号", hintStyle: TextStyle(fontSize: 10.sp, color: Colors.grey), border: InputBorder.none,),
              )),],
            ),
 
             // 更新按钮
-            Container(margin: EdgeInsets.only(bottom: 30.h), child: BrnBigMainButton(
-                title: '更新', bgColor:Get.theme.primaryColor,
-                onTap: () async {
-                  final Map<String,String> submitData = {
-                    "id": "${Cache.getUserInfo().id}",
-                    "userType":"${Cache.getUserInfo().userType}",
-                    "username": _usernameController.text,
-                    "nickName": _nickNameController.text,
-                    "phone": _phoneController.text,
-                    "gender": _gender,
-                    "attachmentId":_attachmentId,
-                  };
-                  final updateResult = await UserService.updateUserInfo(submitData);
-                  if(updateResult["code"] == 200){
-                    final UserInfoModel userInfoModel = await UserService.requestUserInfo("${Cache.getUserInfo().id}");
-                    // 持久化信息
-                    Cache.saveUserInfo(userInfoModel);
-                    EasyLoading.showToast(updateResult["message"]);
-                  } else {
-                    EasyLoading.showToast(updateResult["message"]);
-                  }
-                },
-              )),
+            CommonBottomButtonWidget(text: "更新", color: Get.theme.primaryColor, onPressed: () async {
+              final Map<String,String> submitData = {
+                "id": "${Cache.getUserInfo().id}",
+                "userType":"${Cache.getUserInfo().userType}",
+                "username": _usernameController.text,
+                "nickName": _nickNameController.text,
+                "phone": _phoneController.text,
+                "gender": _gender,
+                "attachmentId":_attachmentId,
+              };
+              final updateResult = await UserService.updateUserInfo(submitData);
+              if(updateResult["code"] == 200){
+                final UserInfoModel userInfoModel = await UserService.requestUserInfo("${Cache.getUserInfo().id}");
+                // 持久化信息
+                Cache.saveUserInfo(userInfoModel);
+                EasyLoading.showToast(updateResult["message"]);
+              } else {
+                EasyLoading.showToast(updateResult["message"]);
+              }
+            })
           ],
         ),
       )

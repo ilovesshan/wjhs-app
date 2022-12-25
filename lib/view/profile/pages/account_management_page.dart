@@ -1,6 +1,7 @@
 import 'package:app/model/account_model.dart';
 import 'package:app/utils/cache.dart';
 import 'package:app/view_model/account_view_model.dart';
+import 'package:app/widget/common_bottom_button.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -88,27 +89,11 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
                   direction: Axis.horizontal,
                   children: [
                     Expanded(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: Container(
-                          height: 39.h, margin: EdgeInsets.only(right: 10.w), alignment: Alignment.center,
-                          decoration: BoxDecoration(color: Get.theme.primaryColor, borderRadius: BorderRadius.circular(20.r)),
-                          child: Text("充值", style: TextStyle(fontSize: 12.sp, color: const Color(0xffffffff))),
-                        ),
-                        onTap: ()=> BrnToast.show("功能还未上线，敬请期待！", context),
-                      ),
+                      child: CommonBottomButtonWidget(text: "充值", color: Get.theme.primaryColor, onPressed: ()=> BrnToast.show("功能还未上线，敬请期待！", context))
                     ),
-
+                    SizedBox(width: 10.w),
                     Expanded(
-                      child: GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        child: Container(
-                          height: 39.h, margin: EdgeInsets.only(right: 10.w), alignment: Alignment.center,
-                          decoration: BoxDecoration(color: const Color(0xff07c160), borderRadius: BorderRadius.circular(20.r)),
-                          child: Text("提现", style: TextStyle(fontSize: 12.sp, color: const Color(0xffffffff))),
-                        ),
-                      onTap: ()=> BrnToast.show("功能还未上线，敬请期待！", context),
-                      ),
+                      child: CommonBottomButtonWidget(text: "提现", color: const Color(0xff07c160), onPressed: ()=> BrnToast.show("功能还未上线，敬请期待！", context))
                     ),
                   ],
                 ),
