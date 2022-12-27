@@ -1,7 +1,9 @@
 import 'package:app/model/notice_model.dart';
+import 'package:app/model/recycles_statistical_model.dart';
 import 'package:app/model/swiper_model.dart';
 import 'package:app/router/router.dart';
 import 'package:app/service/notice_service.dart';
+import 'package:app/service/recycle_statistical_service.dart';
 import 'package:app/service/swiper_service.dart';
 import 'package:app/utils/system_dict_util.dart';
 import 'package:common_utils/common_utils.dart';
@@ -30,6 +32,9 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
     "小程序技术栈：原生小程序 + typescript",
   ];
 
+  RecyclesStatisticalModel recyclesContribution = RecyclesStatisticalModel(currentMonthWeight: "0", accumulativeWeight: "0", totalCount: "0");
+  RecyclesStatisticalModel recyclesStatistical = RecyclesStatisticalModel(currentMonthWeight: "0", accumulativeWeight: "0", totalCount: "0");
+
   List<SwiperModel> swiperModels = [];
   List<NoticeModel> noticeModels = [];
 
@@ -37,25 +42,45 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
   void initState() {
     super.initState();
 
-    _requestHomeData();
+    // 获取轮播图和通知公告
+    _requestSwiperAndNoticeData();
+
+    // 获取回收统计和通知公告
+    _requestRecyclesStatistical();
   }
 
-  _requestHomeData() async {
-     swiperModels = await SwiperService.requestSwiper();
-     noticeModels = await NoticeService.requestNotice();
+  _requestSwiperAndNoticeData() async {
+    // 获取轮播图
+   swiperModels = await SwiperService.requestSwiper();
 
-    _bannerList.clear();
-    _marqueeTextList.clear();
+   // 获取通知公告
+   noticeModels = await NoticeService.requestNotice();
 
-    for (var swiperModel in swiperModels) {
-      _bannerList.add(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+ "${swiperModel.attachment?.url}");
-    }
-    for (var noticeModel in noticeModels) {
-      _marqueeTextList.add("${noticeModel.subTitle}");
-    }
-    setState(() {});
+  _bannerList.clear();
+  _marqueeTextList.clear();
+
+  for (var swiperModel in swiperModels) {
+    _bannerList.add(HttpHelperConfig.serviceList[HttpHelperConfig.selectIndex]+ "${swiperModel.attachment?.url}");
   }
 
+  for (var noticeModel in noticeModels) {
+    _marqueeTextList.add("${noticeModel.subTitle}");
+  }
+
+  setState(() {});
+}
+
+
+  Future<bool> _requestRecyclesStatistical() async {
+    // 获取我的贡献
+    recyclesContribution = await RecyclesStatisticalService.requestContribution();
+
+    if(!SystemDictUtil.isRecyclingCenterUser()){
+      // 获取回收统计
+      recyclesStatistical = await RecyclesStatisticalService.requestStatistics();
+    }
+    return Future.value(true);
+  }
 
 
   @override
@@ -72,151 +97,152 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
               child: Image.asset("assets/common/scan.png", width: 25.w, height: 25.w,),
             ),
             onTap: ()=> QrScannerUtil.scan(onScanSuccess: (res){
-               if(res.toString().startsWith("http://www.ilovesshan.com/?payId=")){
-                 // 处理支付逻辑
-                  EasyLoading.showToast(res.toString());
-               }else{
-                 // 处理其他逻辑
-               }
+              BrnToast.show("抱歉，未能识别的二维码/条形码", context);
             }),
           )
         ],
       ),
-      body: Column(
-        children: [
-          Stack(
-            clipBehavior: Clip.none,
-            children: [
-              // 背景填充
-              Container(height: 200.h, width: Get.width, alignment: Alignment.topCenter, child: Container(width:Get.width, height: 80.h, color: Get.theme.primaryColor)),
-              // 轮播图模块
-              Positioned(
-                left: 5.w, right: 5.w,
-                child: ClipRRect(borderRadius: BorderRadius.circular(20.r), child: SwiperWidget.build(list: _bannerList, onItemPressed: (index)=>{
-                  Get.toNamed(YFRouter.webviewPlugin, arguments: {"path": swiperModels[index].link, "title":swiperModels[index].title})
-                }),
-              ))
-            ],
-          ),
-
-          // 公告
-          Container(
-            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w), width:Get.width, height: 40.h, color: Colors.white,
-            child: Row(
+      body: EasyRefresh(
+        header: CustomRefreshHeader(),
+        onRefresh: () async{
+         await _requestRecyclesStatistical();
+        },
+        child: Column(
+          children: [
+            Stack(
+              clipBehavior: Clip.none,
               children: [
-                Image.asset("assets/common/notice.png", width: 15.w, height: 15.w,),
-                SizedBox(width: 10.h,),
-                Expanded(child: Container(alignment: Alignment.center, height: 20.h, child: buildMarqueeWidget(_marqueeTextList, onItemPressed: (index)=>{
-                  Get.toNamed(YFRouter.noticeDetail, arguments: {"notice":noticeModels[index]}),
-                }))),
+                // 背景填充
+                Container(height: 200.h, width: Get.width, alignment: Alignment.topCenter, child: Container(width:Get.width, height: 80.h, color: Get.theme.primaryColor)),
+                // 轮播图模块
+                Positioned(
+                  left: 5.w, right: 5.w,
+                  child: ClipRRect(borderRadius: BorderRadius.circular(20.r), child: SwiperWidget.build(list: _bannerList, onItemPressed: (index)=>{
+                    Get.toNamed(YFRouter.webviewPlugin, arguments: {"path": swiperModels[index].link, "title":swiperModels[index].title})
+                  }),
+                ))
               ],
             ),
-          ),
 
-          // 回收统计
-          Container(
-            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
-            child: Column(
-              children: [
-                // 标题 和 回收次数
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text("回收统计", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                    Text("累计： 0次", style: TextStyle(fontSize: 12.sp)),
-                  ]
-                ),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    // 本月贡献
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("本月回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
-                            SizedBox(height: 10.h),
-                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                    ),
-                    // 累计贡献
-                    Expanded(
-                      flex: 1,
-                      child:Container(
-                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("累计回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
-                            SizedBox(height: 10.h),
-                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                          ],
-                        ),
-                      ),
-                    )
-                  ],
-                )
-              ],
+            // 公告
+            Container(
+              margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w), width:Get.width, height: 40.h, color: Colors.white,
+              child: Row(
+                children: [
+                  Image.asset("assets/common/notice.png", width: 15.w, height: 15.w,),
+                  SizedBox(width: 10.h,),
+                  Expanded(child: Container(alignment: Alignment.center, height: 20.h, child: buildMarqueeWidget(_marqueeTextList, onItemPressed: (index)=>{
+                    Get.toNamed(YFRouter.noticeDetail, arguments: {"notice":noticeModels[index]}),
+                  }))),
+                ],
+              ),
             ),
-          ),
 
-          // 我的贡献
-          SystemDictUtil.isRecyclingCenterUser() ? const SizedBox() :Container(
-            margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
-            child: Column(
-              children: [
-                // 标题 和 回收次数
-                Row(
+            // 回收统计
+            Container(
+              margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
+              child: Column(
+                children: [
+                  // 标题 和 回收次数
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text("我的贡献", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                      Text("累计： 0次", style: TextStyle(fontSize: 12.sp)),
+                      Text("回收统计", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                      Text("${recyclesStatistical.totalCount}次", style: TextStyle(fontSize: 12.sp)),
                     ]
-                ),
-                Flex(
-                  direction: Axis.horizontal,
-                  children: [
-                    // 本月贡献
-                    Expanded(
-                      flex: 1,
-                      child: Container(
-                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("本月贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
-                            SizedBox(height: 10.h),
-                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                          ],
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      // 本月贡献
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("本月回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                              SizedBox(height: 10.h),
+                              Text("${recyclesStatistical.currentMonthWeight}", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    // 累计贡献
-                    Expanded(
-                      flex: 1,
-                      child:Container(
-                        padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("累计贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
-                            SizedBox(height: 10.h),
-                            Text("0", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
-                          ],
+                      // 累计贡献
+                      Expanded(
+                        flex: 1,
+                        child:Container(
+                          padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("累计回收(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                              SizedBox(height: 10.h),
+                              Text("${recyclesStatistical.accumulativeWeight}", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
                         ),
-                      ),
-                    )
-                  ],
-                )
-              ],
+                      )
+                    ],
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+
+            // 我的贡献
+            SystemDictUtil.isRecyclingCenterUser() ? const SizedBox() :Container(
+              margin: EdgeInsets.only(top: 10.h), padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 10.h), width:Get.width, color: Colors.white,
+              child: Column(
+                children: [
+                  // 标题 和 回收次数
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text("我的贡献", style: TextStyle(fontSize: 14.sp, fontWeight: FontWeight.bold)),
+                      Text("${recyclesContribution.totalCount}次", style: TextStyle(fontSize: 12.sp)),
+                    ]
+                  ),
+                  Flex(
+                    direction: Axis.horizontal,
+                    children: [
+                      // 本月贡献
+                      Expanded(
+                        flex: 1,
+                        child: Container(
+                          padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("本月贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                              SizedBox(height: 10.h),
+                              Text("${recyclesContribution.currentMonthWeight}", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                      ),
+                      // 累计贡献
+                      Expanded(
+                        flex: 1,
+                        child:Container(
+                          padding: EdgeInsets.all(10.w), margin: EdgeInsets.only(top: 10.h, right: 10.w), decoration: BoxDecoration(color: Color(0xfff5faf6), borderRadius: BorderRadius.circular(5.r)),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text("累计贡献(KG)", style: TextStyle(fontSize: 12.sp, color: Get.theme.primaryColor)),
+                              SizedBox(height: 10.h),
+                              Text("${recyclesContribution.accumulativeWeight}", style: TextStyle(fontSize: 16.sp, fontWeight: FontWeight.bold)),
+                            ],
+                          ),
+                        ),
+                      )
+                    ],
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

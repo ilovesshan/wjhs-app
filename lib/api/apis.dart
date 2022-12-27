@@ -30,10 +30,11 @@ class Apis {
   static const String recycleGoodsOrder = "/recycleOrders";
 
   // 支付订单
-  static const String recycleGoodsPay= "/recycleOrders/pay";
-
+  static const String recycleGoodsPay = "/recycleOrders/pay";
 
   // 查询余额和流水记录
-  static const String balanceAndRecord= "/accounts";
+  static const String balanceAndRecord = "/accounts";
 
+  // 回收商品统计模块
+  static const String recyclesStatistical = "/recycle/statistical";
 }
