@@ -47,7 +47,7 @@ class _FeedBackPageState extends State<FeedBackPage> {
                   decoration: InputDecoration(hintText: "输入反馈详情", hintStyle: TextStyle(fontSize: 10.sp, color: Colors.grey), border: InputBorder.none,),
                 )),
 
-                CommonUserInfoItem.buildUserInfoItem("反馈详情", buildUserAvatar()),
+                CommonUserInfoItem.buildUserInfoItem("反馈图片", buildAttachmentWidget()),
 
               ],
             ),
@@ -61,7 +61,7 @@ class _FeedBackPageState extends State<FeedBackPage> {
                   "attachmentId": _attachmentId,
                 });
                 if(result){
-                    BrnToast.show("感谢您的反馈，我们会尽快处理", context);
+                    BrnToast.show("感谢您的反馈，我们会尽快处理", context, duration: const Duration(milliseconds: 500));
                     Future.delayed(const Duration(milliseconds: 800), ()=> Get.back());
                 }else{
                   BrnToast.show("反馈失败，请稍后再试", context);
@@ -75,7 +75,7 @@ class _FeedBackPageState extends State<FeedBackPage> {
   }
 
   // 附件上传Widget
-  Widget buildUserAvatar() {
+  Widget buildAttachmentWidget() {
     return GestureDetector(
       child: ClipRRect(borderRadius: BorderRadius.circular(35.r),
           child:
