@@ -20,12 +20,6 @@ class UserInfoDetailPage extends StatefulWidget {
 
 class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
 
-  final List<CommonBottomSheetResultModel> _pickerOptions = [
-    CommonBottomSheetResultModel(name: "拍照上传", value: "0"),
-    CommonBottomSheetResultModel(name: "相册选取", value: "1"),
-    CommonBottomSheetResultModel(name: "取消", value: "2")
-  ];
-
   final TextEditingController _usernameController = TextEditingController();
   final TextEditingController _nickNameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
@@ -133,7 +127,7 @@ class _UserInfoDetailPageState extends State<UserInfoDetailPage> {
              : Image.asset("assets/images/app_logo/app-logo.png", width: 35.w, height: 35.w,fit: BoxFit.fill)
       ),
       onTap: () async {
-        CommonBottomSheetSelector.show(data: _pickerOptions, onResult: ((index) async {
+        CommonBottomSheetSelector.show(data: FileUploadUtil.pickerOptions, onResult: ((index) async {
           if(index ==2){
             return;
           }else{

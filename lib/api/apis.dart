@@ -37,4 +37,7 @@ class Apis {
 
   // 回收商品统计模块
   static const String recyclesStatistical = "/recycle/statistical";
+
+  // 用户反馈模块
+  static const String feedback = "/feedback";
 }

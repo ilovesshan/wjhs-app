@@ -4,6 +4,11 @@ import 'package:common_utils/common_utils.dart';
 class FileUploadUtil {
   static final HttpHelper _httpHelper = HttpHelper.getInstance();
 
+  static List<CommonBottomSheetResultModel>  pickerOptions = [
+    CommonBottomSheetResultModel(name: "拍照上传", value: "0"),
+    CommonBottomSheetResultModel(name: "相册选取", value: "1"),
+    CommonBottomSheetResultModel(name: "取消", value: "2")
+  ];
 
   /// 单文件上传
   static Future<dynamic> uploadSingleWithId({required String filePath, required String id})  async {

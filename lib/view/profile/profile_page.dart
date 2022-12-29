@@ -59,7 +59,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
           // 意见反馈
           buildProfileCommonItem(title: "意见反馈", iconPath: "assets/images/profile/yijianfankui.png", onPressed: (){
-            BrnToast.show("功能还未上线，敬请期待！", context);
+            Get.toNamed(YFRouter.feedBackRecord);
           }),
 
           // 退出登录
