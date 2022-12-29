@@ -79,6 +79,7 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
       // 获取回收统计
       recyclesStatistical = await RecyclesStatisticalService.requestStatistics();
     }
+    setState(() {});
     return Future.value(true);
   }
 
