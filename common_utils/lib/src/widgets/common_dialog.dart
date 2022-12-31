@@ -29,6 +29,11 @@ class CommonDialog {
   static void showTipDialog(BuildContext context, {required Function onTipPressed,String label = "确定", String title = "标题", String message = "主要内容"}){
     BrnDialogManager.showSingleButtonDialog(
       context,
+      themeData: BrnDialogConfig(
+        titleTextStyle: BrnTextStyle(fontSize: 14),
+        mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
+        assistActionsTextStyle: BrnTextStyle(fontSize: 12),
+      ),
       barrierDismissible:false,
       label: label,
       title: title,
@@ -58,6 +63,25 @@ class CommonDialog {
         onCancel : () {
           Get.back();
           onCancel();
+        }
+    );
+  }
+
+  static void showTipDialogCustom(BuildContext context, {required Function onTipPressed, String label = "确定",  String title = "标题",  required Widget messageWidget }){
+    BrnDialogManager.showSingleButtonDialog(
+        context,
+        themeData: BrnDialogConfig(
+          titleTextStyle: BrnTextStyle(fontSize: 14),
+          mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
+          assistActionsTextStyle: BrnTextStyle(fontSize: 12),
+        ),
+        barrierDismissible:false,
+        label: label,
+        title: title,
+        messageWidget: messageWidget,
+        onTap: () {
+          Get.back();
+          onTipPressed();
         }
     );
   }
