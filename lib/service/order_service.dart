@@ -31,4 +31,14 @@ class RecycleOrderService {
     }
     return _isSuccess;
   }
+
+  // 更新订单状态
+  static Future<bool> sendRecycleGoodsOrderToRecycleCenter(String orderId, String receiveUserId) async {
+    bool _isSuccess = false;
+    final result = await HttpHelper.getInstance().put("${Apis.recycleGoodsOrder}/$orderId?receiveUserId=$receiveUserId" );
+    if(result["code"] == 200){
+      _isSuccess = true;
+    }
+    return _isSuccess;
+  }
 }

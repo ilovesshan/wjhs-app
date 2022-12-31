@@ -15,6 +15,7 @@ class OrderModel {
     this.receiveUserId,
     this.orderType,
     this.status,
+    this.sendToRecycleCenter,
     this.tradingMoney,
     this.totalWeight,
     this.totalIntegral,
@@ -36,6 +37,7 @@ class OrderModel {
   String? receiveUserId;
   String? orderType;
   String? status;
+  String? sendToRecycleCenter;
   String? tradingMoney;
   String? totalWeight;
   String? totalIntegral;
@@ -57,6 +59,7 @@ class OrderModel {
     receiveUserId: json["receiveUserId"].toString(),
     orderType: json["orderType"].toString(),
     status: json["status"].toString(),
+    sendToRecycleCenter: json["sendToRecycleCenter"].toString(),
     tradingMoney: json["tradingMoney"].toString(),
     totalWeight: json["totalWeight"].toString(),
     totalIntegral: json["totalIntegral"].toString(),
@@ -80,6 +83,7 @@ class OrderModel {
     "receiveUserId": receiveUserId,
     "orderType": orderType,
     "status": status,
+    "sendToRecycleCenter": sendToRecycleCenter,
     "tradingMoney": tradingMoney,
     "totalWeight": totalWeight,
     "totalIntegral": totalIntegral,

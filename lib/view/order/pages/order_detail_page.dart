@@ -44,7 +44,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                     Text("订单状态：", style: TextStyle(fontSize: 13.sp)),
                     Container(
                       margin: EdgeInsets.only(top: 3.h),
-                      child: BrnTagCustom(tagText: SystemDictUtil.getTextByCode("${vm.mode.status}")!, backgroundColor: Get.theme.primaryColor),
+                      child: BrnTagCustom(fontSize: 10.sp, tagText: SystemDictUtil.getTextByCode("${vm.mode.status}")!, backgroundColor: Get.theme.primaryColor),
                     )
                   ]
                 ),
@@ -88,18 +88,18 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 buildRow("订单价格", "${vm.mode.tradingMoney}"),
 
                 SizedBox(height: 5.h),
-                buildRow("预约人姓名", "${vm.mode.address!.userName}"),
+                vm.mode.orderType == "10" ? buildRow("预约人姓名", "${vm.mode.address!.userName}") : buildRow("回收中心负责人姓名", "${vm.mode.receiveUser!.username}"),
 
                 SizedBox(height: 5.h),
-                buildRow("预约人电话",  "${vm.mode.address!.phone}"),
+                vm.mode.orderType == "10" ? buildRow("预约人电话", "${vm.mode.address!.phone}") : buildRow("回收中心负责人电话",  "${vm.mode.receiveUser!.phone}"),
 
                 SizedBox(height: 5.h),
-                buildRow("预约人地址",  vm.mode.address!.province! +  vm.mode.address!.city! +  vm.mode.address!.area! + vm.mode.address!.detailAddress!),
+                vm.mode.orderType == "10" ? buildRow("预约人地址",  vm.mode.address!.province! +  vm.mode.address!.city! +  vm.mode.address!.area! + vm.mode.address!.detailAddress!) : const SizedBox(),
 
-                SizedBox(height: 5.h),
-                buildRow("预约时间",  vm.mode.appointmentBeginTime!.substring(0, 16) + " - " + vm.mode.appointmentEndTime!.substring(11, 16)),
+                vm.mode.orderType == "10" ? SizedBox(height: 5.h): const SizedBox(),
+                vm.mode.orderType == "10" ? buildRow("预约时间",  vm.mode.appointmentBeginTime!.substring(0, 16) + " - " + vm.mode.appointmentEndTime!.substring(11, 16)) : const SizedBox(),
 
-                SizedBox(height: 5.h),
+                vm.mode.orderType == "10" ? SizedBox(height: 5.h): const SizedBox(),
                 buildRow("下单时间",  "${vm.mode.createTime}"),
 
                 SizedBox(height: 5.h),
@@ -115,7 +115,7 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                   ]
                 ),
                 SizedBox(height: 5.h),
-                buildRow("备注信息", "${vm.mode.note}"),
+                vm.mode.orderType == "10" ? buildRow("备注信息", "${vm.mode.note}") : const SizedBox(),
               ],
             ),
           );

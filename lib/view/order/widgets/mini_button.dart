@@ -14,13 +14,13 @@ class MiniButton extends StatelessWidget {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 3.h), alignment: Alignment.center,
+        padding: EdgeInsets.symmetric(horizontal: 5.w, vertical: 2.h), alignment: Alignment.center,
         decoration: BoxDecoration(color: color, borderRadius: BorderRadius.circular(2.r)),
         child: Row(
           children: [
-            Icon(icon, color: const Color(0xffffffff), size: 15),
+            Icon(icon, color: const Color(0xffffffff), size: 12),
             SizedBox(width: 3.w),
-            Text(text,style: TextStyle(fontSize: 12.sp, color: const Color(0xffffffff)))
+            Text(text,style: TextStyle(fontSize: 10.sp, color: const Color(0xffffffff)))
           ],
         ),
       ),

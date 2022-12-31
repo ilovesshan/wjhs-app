@@ -47,7 +47,7 @@ class _FeedBackRecordPageState extends State<FeedBackRecordPage> {
                           children: [
                             Row(children: [
                               SizedBox(width:280.sp, child: Text("${feedbackRecordModel.feedbackTitle}", style: TextStyle(fontSize: 12.sp))),
-                              Expanded(child: BrnTagCustom( backgroundColor: feedbackRecordModel.isSolve == '38' ? Get.theme.primaryColor : const Color(0xffff6c37), tagText: feedbackRecordModel.isSolve == '38' ? '已处理' : '待处理'))
+                              Expanded(child: BrnTagCustom(fontSize: 10.sp, backgroundColor: feedbackRecordModel.isSolve == '38' ? Get.theme.primaryColor : const Color(0xffff6c37), tagText: feedbackRecordModel.isSolve == '38' ? '已处理' : '待处理'))
                             ]),
                             SizedBox(height: 5.h),
                             !TextUtils.isValid("${feedbackRecordModel.feedbackDetail}")

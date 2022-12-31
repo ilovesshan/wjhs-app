@@ -16,6 +16,18 @@ class UserService {
     return userInfoModel;
   }
 
+  // 获取用户信息
+  static Future<List<UserInfoModel>> requestUserListByType() async {
+    List<UserInfoModel> _list = [];
+    final result = await HttpHelper.getInstance().get("${Apis.userApi}/?type=3");
+    if(result["code"] == 200){
+      for(var json in result["data"]){
+        _list.add(UserInfoModel.fromJson(json));
+      }
+    }
+    return _list;
+  }
+
   // 更新用户信息
   static Future<dynamic> updateUserInfo(Map<String, String> data) async {
     final result = await HttpHelper.getInstance().put(Apis.userApi, data:data);

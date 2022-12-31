@@ -7,9 +7,11 @@ class CommonDialog {
   static void showConfirmDialog(BuildContext context, { required String title, required Function onConfirm, required Function onCancel, String cancelText = "取消", String confirmText = "确定"}){
     return BrnDialogManager.showConfirmDialog(context,
         themeData: BrnDialogConfig(
-            titleTextStyle: BrnTextStyle(fontSize: 14),
-            mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
-            assistActionsTextStyle: BrnTextStyle(fontSize: 12),
+          titlePaddingLg: const EdgeInsets.symmetric(vertical: 8),
+          titlePaddingSm: const EdgeInsets.symmetric(vertical: 8),
+          titleTextStyle: BrnTextStyle(fontSize: 12),
+          mainActionTextStyle: BrnTextStyle(fontSize: 10, color: Get.theme.primaryColor),
+          assistActionsTextStyle: BrnTextStyle(fontSize: 10),
         ),
         title: title,
         cancel: cancelText,
@@ -30,9 +32,11 @@ class CommonDialog {
     BrnDialogManager.showSingleButtonDialog(
       context,
       themeData: BrnDialogConfig(
-        titleTextStyle: BrnTextStyle(fontSize: 14),
-        mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
-        assistActionsTextStyle: BrnTextStyle(fontSize: 12),
+        titlePaddingLg: const EdgeInsets.symmetric(vertical: 8),
+        titlePaddingSm: const EdgeInsets.symmetric(vertical: 8),
+        titleTextStyle: BrnTextStyle(fontSize: 12),
+        mainActionTextStyle: BrnTextStyle(fontSize: 10, color: Get.theme.primaryColor),
+        assistActionsTextStyle: BrnTextStyle(fontSize: 10),
       ),
       barrierDismissible:false,
       label: label,
@@ -52,6 +56,13 @@ class CommonDialog {
   /// 支持自定义 MessageWidget
   static void showDialogCustom(BuildContext context, { required String title, required Function onConfirm, required Function onCancel, String cancelText = "取消", String confirmText = "确定", Widget? messageWidget}){
     return BrnDialogManager.showConfirmDialog(context,
+        themeData: BrnDialogConfig(
+          titlePaddingLg: const EdgeInsets.symmetric(vertical: 8),
+          titlePaddingSm: const EdgeInsets.symmetric(vertical: 8),
+          titleTextStyle: BrnTextStyle(fontSize: 12),
+          mainActionTextStyle: BrnTextStyle(fontSize: 10, color: Get.theme.primaryColor),
+          assistActionsTextStyle: BrnTextStyle(fontSize: 10),
+        ),
         title: title,
         cancel: cancelText,
         confirm: confirmText,
@@ -67,15 +78,17 @@ class CommonDialog {
     );
   }
 
-  static void showTipDialogCustom(BuildContext context, {required Function onTipPressed, String label = "确定",  String title = "标题",  required Widget messageWidget }){
+  static void showTipDialogCustom(BuildContext context, {required Function onTipPressed, String label = "确定",  bool barrierDismissible = true, String title = "标题",  required Widget messageWidget }){
     BrnDialogManager.showSingleButtonDialog(
         context,
         themeData: BrnDialogConfig(
+          titlePaddingLg: const EdgeInsets.symmetric(vertical: 8),
+          titlePaddingSm: const EdgeInsets.symmetric(vertical: 8),
           titleTextStyle: BrnTextStyle(fontSize: 14),
           mainActionTextStyle: BrnTextStyle(fontSize: 12, color: Get.theme.primaryColor),
           assistActionsTextStyle: BrnTextStyle(fontSize: 12),
         ),
-        barrierDismissible:false,
+        barrierDismissible: barrierDismissible,
         label: label,
         title: title,
         messageWidget: messageWidget,

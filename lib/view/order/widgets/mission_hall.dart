@@ -52,12 +52,12 @@ class _MissionHallState extends State<MissionHall> {
                       Row(
                         crossAxisAlignment: CrossAxisAlignment.start, mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SizedBox(width: 200.w, child: CommonRow(title: "商品重量", value: "${orderModel.totalWeight}")),
-                          BrnTagCustom(tagText: SystemDictUtil.getTextByCode("${orderModel.status}")!, backgroundColor: Get.theme.primaryColor, tagBorderRadius: const BorderRadius.only(topRight: Radius.circular(5)),)
+                          SizedBox(width: 200.w, child: CommonRow(title: "订单重量", value: "${orderModel.totalWeight}")),
+                          BrnTagCustom(fontSize: 10.sp, tagText: SystemDictUtil.getTextByCode("${orderModel.status}")!, backgroundColor: Get.theme.primaryColor, tagBorderRadius: const BorderRadius.only(topRight: Radius.circular(5)),)
                         ]
                       ),
                       SizedBox(height: 3.h),
-                      CommonRow(title: "商品价格", value: "${orderModel.tradingMoney}"),
+                      CommonRow(title: "订单价格", value: "${orderModel.tradingMoney}"),
                       SizedBox(height: 3.h),
                       CommonRow(title: "预约时间", value: appointmentTime),
                       SizedBox(height: 3.h),
@@ -68,7 +68,7 @@ class _MissionHallState extends State<MissionHall> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
-                            MiniButton(text: "抢单", icon: Icons.add, color: Colors.red, onPressed: (){
+                            MiniButton(text: "抢单", icon: Icons.add, color: Colors.green, onPressed: (){
                               CommonDialog.showConfirmDialog(context, title: "确定要进行本单任务吗?", onConfirm: () async {
                                 final isSuccess = await RecycleOrderService.updateOrderState("${orderModel.id}", "5");
                                 if(isSuccess){
@@ -104,11 +104,11 @@ class _MissionHallState extends State<MissionHall> {
 
   Widget buildRow(String key, String value){
     return Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(key +"：", style: TextStyle(fontSize: 12.sp)),
-          Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 12.sp))),
-        ]
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(key +"：", style: TextStyle(fontSize: 12.sp)),
+        Expanded(child: Text(TextUtils.isValidWith(value, ""), style: TextStyle(fontSize: 12.sp))),
+      ]
     );
   }
 }
