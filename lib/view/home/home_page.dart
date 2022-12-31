@@ -72,13 +72,14 @@ class _HomePageState extends State<HomePage> with AutomaticKeepAliveClientMixin 
 
 
   Future<bool> _requestRecyclesStatistical() async {
-    // 获取我的贡献
-    recyclesContribution = await RecyclesStatisticalService.requestContribution();
+    // 获取回收统计
+    recyclesStatistical = await RecyclesStatisticalService.requestStatistics(SystemDictUtil.isRecyclingCenterUser()? "11" : "10", SystemDictUtil.isRecyclingCenterUser()? "3" : "2");
 
+    // 获取我的贡献
     if(!SystemDictUtil.isRecyclingCenterUser()){
-      // 获取回收统计
-      recyclesStatistical = await RecyclesStatisticalService.requestStatistics();
+      recyclesContribution = await RecyclesStatisticalService.requestContribution();
     }
+
     setState(() {});
     return Future.value(true);
   }

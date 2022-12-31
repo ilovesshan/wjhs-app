@@ -15,9 +15,9 @@ class RecyclesStatisticalService {
   }
 
   // 获取回收统计
-  static Future<RecyclesStatisticalModel> requestStatistics() async {
+  static Future<RecyclesStatisticalModel> requestStatistics(String orderType, String userType) async {
     RecyclesStatisticalModel recyclesStatisticalModel = RecyclesStatisticalModel();
-    final result = await HttpHelper.getInstance().get("${ Apis.recyclesStatistical}?orderType=10&userType=2");
+    final result = await HttpHelper.getInstance().get("${ Apis.recyclesStatistical}?orderType=$orderType&userType=$userType");
     if (result["code"] == 200) {
       recyclesStatisticalModel = RecyclesStatisticalModel.fromJson(result["data"]);
     }

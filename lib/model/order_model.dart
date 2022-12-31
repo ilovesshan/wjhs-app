@@ -30,6 +30,7 @@ class OrderModel {
     this.receiveUser,
     this.isDelete,
     this.createTime,
+    this.updateTime,
   });
 
   String? id;
@@ -52,6 +53,7 @@ class OrderModel {
   UserInfoModel? receiveUser;
   String? isDelete;
   String? createTime;
+  String? updateTime;
 
   factory OrderModel.fromJson(Map<String, dynamic> json) => OrderModel(
     id: json["id"].toString(),
@@ -74,6 +76,7 @@ class OrderModel {
     receiveUser: (json["receiveUser"] == null || json["receiveUser"] == "") ? null :  UserInfoModel.fromJson(json["receiveUser"]),
     isDelete: json["isDelete"].toString(),
     createTime: json["createTime"].toString(),
+    updateTime: json["updateTime"].toString(),
   );
 
 
@@ -98,6 +101,7 @@ class OrderModel {
     "receiveUser": receiveUser,
     "isDelete": isDelete,
     "createTime": createTime,
+    "updateTime": updateTime,
   };
 }
 

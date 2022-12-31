@@ -37,13 +37,12 @@ class _MenuContainerState extends State<MenuContainer> with SingleTickerProvider
   @override
   void initState() {
     super.initState();
-
-    if(SystemDictUtil.isRecyclingCenterUser()){
-      // 回收中心用户没有订单列表权限
-      _pageList.removeAt(2);
-      _tabBarList.removeAt(2);
-      setState(() {});
-    }
+    // if(SystemDictUtil.isRecyclingCenterUser()){
+    //   // 回收中心用户没有订单列表权限
+    //   _pageList.removeAt(2);
+    //   _tabBarList.removeAt(2);
+    //   setState(() {});
+    // }
     _tabController = TabController(vsync: this, length: _pageList.length);
   }
 

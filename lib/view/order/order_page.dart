@@ -1,3 +1,6 @@
+import 'package:app/utils/system_dict_util.dart';
+import 'package:app/view/order/widgets/recycle_center_done.dart';
+import 'package:app/view/order/widgets/recycle_center_in_progress.dart';
 import 'package:app/view/order/widgets/user_order.dart';
 import 'package:app/view/order/widgets/mission_hall.dart';
 import 'package:app/view/order/widgets/inventory_order.dart';
@@ -15,9 +18,9 @@ class OrderPage extends StatefulWidget {
 
 class _OrderPageState extends State<OrderPage> with SingleTickerProviderStateMixin {
 
-  final List<Widget> _pages = [const MissionHall(), const userOrder(), const InventoryOrder()];
+  List<Widget> _pages = [const MissionHall(), const userOrder(), const InventoryOrder()];
 
-  final List<Widget> _tabs = [
+  List<Widget> _tabs = [
     Padding(padding: EdgeInsets.all(5.w), child: const Text("任务大厅")),
     Padding(padding: EdgeInsets.all(5.w), child: const Text("用户订单")),
     Padding(padding: EdgeInsets.all(5.w), child: const Text("库存订单")),
@@ -28,6 +31,15 @@ class _OrderPageState extends State<OrderPage> with SingleTickerProviderStateMix
   @override
   void initState() {
     super.initState();
+
+    if(SystemDictUtil.isRecyclingCenterUser()){
+      _pages = [const RecycleCenterInProgress(), const RecycleCenterDone()];
+      _tabs = [
+        Padding(padding: EdgeInsets.all(5.w), child: const Text("进行中")),
+        Padding(padding: EdgeInsets.all(5.w), child: const Text("已完成")),
+      ];
+    }
+
     _tabController = TabController(length: _pages.length, vsync: this);
   }
 

@@ -112,6 +112,8 @@ class _userOrderState extends State<userOrder> with SingleTickerProviderStateMix
                           SizedBox(height: 3.h),
                           CommonRow(title: "订单编号", value: "${orderModel.id}"),
                           SizedBox(height: 3.h),
+                          _currentIndex == 2 ? CommonRow(title: "结算时间", value: "${orderModel.updateTime}") : const SizedBox(),
+                          _currentIndex == 2 ? SizedBox(height: 3.h) : const SizedBox(),
                           _buildCommonOperationBar(orderModel, vm)
                         ],
                       ),

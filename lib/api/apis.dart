@@ -26,6 +26,9 @@ class Apis {
   // 查询骑手相关订单信息
   static const String driverRecycleGoodsOrder = "/recycleOrders/driver";
 
+  // 查询骑手相关订单信息
+  static const String recycleCenterRecycleGoodsOrder = "/recycleOrders/recycleCenter";
+
   // 订单信息
   static const String recycleGoodsOrder = "/recycleOrders";
 
