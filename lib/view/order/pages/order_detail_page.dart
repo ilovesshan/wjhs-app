@@ -88,10 +88,12 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
                 buildRow("订单价格", "${vm.mode.tradingMoney}"),
 
                 SizedBox(height: 5.h),
-                vm.mode.orderType == "10" ? buildRow("预约人姓名", "${vm.mode.address!.userName}") : buildRow("回收中心负责人姓名", "${vm.mode.receiveUser!.username}"),
+                // 按角色显示不同的内容
+                _buildSubmitUserName(vm),
 
                 SizedBox(height: 5.h),
-                vm.mode.orderType == "10" ? buildRow("预约人电话", "${vm.mode.address!.phone}") : buildRow("回收中心负责人电话",  "${vm.mode.receiveUser!.phone}"),
+                // 按角色显示不同的内容
+                _buildSubmitUserPhone(vm),
 
                 SizedBox(height: 5.h),
                 vm.mode.orderType == "10" ? buildRow("预约人地址",  vm.mode.address!.province! +  vm.mode.address!.city! +  vm.mode.address!.area! + vm.mode.address!.detailAddress!) : const SizedBox(),
@@ -101,6 +103,9 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
 
                 vm.mode.orderType == "10" ? SizedBox(height: 5.h): const SizedBox(),
                 buildRow("下单时间",  "${vm.mode.createTime}"),
+
+                vm.mode.status == "7" ?  SizedBox(height: 5.h): const SizedBox(),
+                vm.mode.status == "7" ? buildRow("结算时间", "${vm.mode.updateTime}") : const SizedBox(),
 
                 SizedBox(height: 5.h),
                 Row(
@@ -122,6 +127,30 @@ class _OrderDetailPageState extends State<OrderDetailPage> {
         },
       ),
     );
+  }
+
+  Row _buildSubmitUserName(OrderDetailViewModel vm){
+    if(vm.mode.orderType == "10" ){
+      return buildRow("预约人姓名", "${vm.mode.address!.userName}");
+    }else{
+      if(SystemDictUtil.isRecyclingCenterUser()){
+        return buildRow("预约人姓名", "${vm.mode.submitUser!.username}");
+      }else{
+        return buildRow("回收中心负责人姓名", "${vm.mode.receiveUser!.username}");
+      }
+    }
+  }
+
+  Row _buildSubmitUserPhone(OrderDetailViewModel vm){
+    if(vm.mode.orderType == "10" ){
+      return buildRow("预约人电话", "${vm.mode.address!.phone}");
+    }else{
+      if(SystemDictUtil.isRecyclingCenterUser()){
+        return buildRow("预约人电话", "${vm.mode.submitUser!.phone}");
+      }else{
+        return buildRow("回收中心负责人姓名", "${vm.mode.receiveUser!.phone}");
+      }
+    }
   }
 
   Row buildRow(String title, String value) {

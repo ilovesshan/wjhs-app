@@ -28,6 +28,7 @@ class OrderModel {
     this.attachments,
     this.address,
     this.receiveUser,
+    this.submitUser,
     this.isDelete,
     this.createTime,
     this.updateTime,
@@ -51,6 +52,7 @@ class OrderModel {
   List<AttachmentModel>? attachments;
   AddressModel? address;
   UserInfoModel? receiveUser;
+  UserInfoModel? submitUser;
   String? isDelete;
   String? createTime;
   String? updateTime;
@@ -74,6 +76,7 @@ class OrderModel {
     attachments: (json["attachments"] == null || json["attachments"] == "") ? [] : List<AttachmentModel>.from(json["attachments"].map((x) => AttachmentModel.fromJson(x))),
     address: (json["address"] == null || json["address"] == "") ? null : AddressModel.fromJson(json["address"]),
     receiveUser: (json["receiveUser"] == null || json["receiveUser"] == "") ? null :  UserInfoModel.fromJson(json["receiveUser"]),
+    submitUser: (json["submitUser"] == null || json["submitUser"] == "") ? null :  UserInfoModel.fromJson(json["submitUser"]),
     isDelete: json["isDelete"].toString(),
     createTime: json["createTime"].toString(),
     updateTime: json["updateTime"].toString(),
@@ -99,6 +102,7 @@ class OrderModel {
     "attachments": List<AttachmentModel>.from(attachments!.map((x) => x.toJson())),
     "address": address!.toJson(),
     "receiveUser": receiveUser,
+    "submitUser": submitUser,
     "isDelete": isDelete,
     "createTime": createTime,
     "updateTime": updateTime,
