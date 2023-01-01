@@ -66,14 +66,16 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                    isIncome ? (TextUtils.isValid("${accountRecord.tradingNote}") ? "回收商品支入" : "${accountRecord.tradingNote}" "(平台交易)") : "回收商品支出(平台交易)",
+                                    isIncome
+                                      ? (TextUtils.isValid("${accountRecord.tradingNote}") ? "回收商品支入(平台交易)" : "${accountRecord.tradingNote}" "(平台交易)")
+                                      : (TextUtils.isValid("${accountRecord.tradingNote}") ? "回收商品支出(平台交易)" : "${accountRecord.tradingNote}" "(平台交易)"),
                                     style: TextStyle(fontSize: 12.sp, color: isIncome ? Get.theme.primaryColor : const Color(0xff222222)),
                                 ),
                                 Text(isIncome ? "+${accountRecord.tradingMoney}" : "-${accountRecord.tradingMoney}", style: TextStyle(color: isIncome ? Get.theme.primaryColor : const Color(0xff222222), fontSize: 12.sp, fontWeight: FontWeight.bold)),
                               ]
                             ),
                             SizedBox(height: 5.h),
-                            Text("${accountRecord.createTime}", style: TextStyle(fontSize: 12.sp, color: Color(0xffcccccc))),
+                            Text("${accountRecord.createTime}", style: TextStyle(fontSize: 12.sp, color: const Color(0xffcccccc))),
                           ],
                         ),
                       );
