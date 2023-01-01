@@ -73,7 +73,7 @@ class _AccountManagementPageState extends State<AccountManagementPage> {
                               ]
                             ),
                             SizedBox(height: 5.h),
-                            Text("2022-12-24 18:25:45", style: TextStyle(fontSize: 12.sp, color: Color(0xffcccccc))),
+                            Text("${accountRecord.createTime}", style: TextStyle(fontSize: 12.sp, color: Color(0xffcccccc))),
                           ],
                         ),
                       );
