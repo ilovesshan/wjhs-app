@@ -71,7 +71,7 @@ class _AppointmentPageState extends State<CategoryPage> with AutomaticKeepAliveC
 
                   // 商品列表
                   Expanded(
-                    child: Column(children: List.generate(_recycleGoodsModels[currentIndex].recycleGoods!.length, (index){
+                    child: _recycleGoodsModels.isEmpty ? const SizedBox() : Column(children: List.generate(_recycleGoodsModels[currentIndex].recycleGoods!.length, (index){
                       return buildRecycleGoodsItemWidget(_recycleGoodsModels[currentIndex].recycleGoods![index]);
                     })),
                   )
