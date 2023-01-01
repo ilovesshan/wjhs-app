@@ -69,10 +69,6 @@ class _InventoryOrderState extends State<InventoryOrder> with SingleTickerProvid
               child: Column(
                 children: List.generate(vm.mode.length, (index){
                   final OrderModel orderModel = vm.mode[index];
-                  // 预约时间显示
-                  final String appointmentTime =  orderModel.appointmentBeginTime!.substring(0, 16) + " - " + orderModel.appointmentEndTime!.substring(11, 16);
-                  // 上门地址
-                  final String address = orderModel.address!.province! +  orderModel.address!.city! +  orderModel.address!.area! + orderModel.address!.detailAddress!;
                   // 计算回收价格
                   double recyclePrice = 0.0;
                   for (var recycleOrder in orderModel.recycleOrderDetails!) {
@@ -116,7 +112,11 @@ class _InventoryOrderState extends State<InventoryOrder> with SingleTickerProvid
                                       version: QrVersions.auto,
                                       size: 180.0,
                                     ),
-                                  ), onTipPressed: (){});
+                                  ), onTipPressed: (){
+                                    vm.type = _type;
+                                    vm.status = _status;
+                                    vm.initData();
+                                  });
                                 }),
                               ],
                             ),
