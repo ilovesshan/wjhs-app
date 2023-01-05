@@ -223,7 +223,10 @@ class _userOrderState extends State<userOrder> with SingleTickerProviderStateMix
                       return Column(
                         children:[
                           ListTile(
-                            leading: ClipRRect(borderRadius: BorderRadius.circular(10.sp),child: Image.network(_baseUrl + "${recycleCenterUserList[index].attachment!.url}", width: 35.w, height: 35.w)),
+                            leading: ClipRRect(borderRadius: BorderRadius.circular(10.sp),
+                            child: (recycleCenterUserList[index].attachment != null && TextUtils.isNotValid("${recycleCenterUserList[index].attachment!.url}"))
+                              ? Image.network(_baseUrl + "${recycleCenterUserList[index].attachment!.url}", width: 35.w, height: 35.w)
+                              : Image.asset("assets/images/app_logo/app-logo.png", width: 40.w, height: 40.w,fit: BoxFit.cover)),
                             title: Text("${recycleCenterUserList[index].username}", style: TextStyle(fontSize: 14.sp), textAlign: TextAlign.left),
                             subtitle: Text("${recycleCenterUserList[index].phone}", style: TextStyle(fontSize: 12.sp), textAlign: TextAlign.left),
                             onTap: () async {
