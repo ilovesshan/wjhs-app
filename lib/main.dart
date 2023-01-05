@@ -1,6 +1,7 @@
 import 'package:app/native_channel/notice_channel.dart';
 import 'package:app/router/router.dart';
 import 'package:app/utils/jpush_util.dart';
+import 'package:app/utils/sms_receive_util.dart';
 import 'package:app/utils/x_update_util.dart';
 import 'package:common_utils/common_utils.dart';
 import 'package:flutter/material.dart';
@@ -30,6 +31,15 @@ class _ApplicationState extends State<Application> {
 
     // 初始化 xupdate
     XupdateUtil.initXUpdate();
+
+    // 初始化 SmsReceivePlugin
+    SmsReceiveUtil.init();
+
+    // 监听短信验证码
+    SmsReceiveUtil.setListener(SmsReceivedListener(onSmsReceived: (Map<String,String> payload) {
+      final senderPhone = payload["senderPhone"];
+      final receiveMessage = payload["receiveMessage"];
+    }));
   }
 
   @override

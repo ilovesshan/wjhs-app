@@ -10,4 +10,7 @@ package com.wjhs.app.constants;
 public class ChannelConstant {
     public static final String NOTICE_CHANNEL_NAME = "wjhs/noticeChannel";
     public static final String NOTICE_CHANNEL_METHOD_KEY = "showNotice";
+
+    public static final String RECEIVE_CHANNEL_NAME = "wjhs/smsReceiveChannel";
+    public static final String RECEIVE_CHANNEL_METHOD_KEY = "smsReceive";
 }
