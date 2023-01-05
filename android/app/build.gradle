@@ -107,14 +107,17 @@ android {
         }
     }
 
-    //修改apk 的 文件名
+    // 修改apk 的 文件名
     applicationVariants.all { variant ->
         variant.outputs.all { output ->
             def date = new Date().format("yyyy_MM_dd_hh_mm", TimeZone.getTimeZone("GMT+08"))
+            def applicationId = android.defaultConfig.applicationId
+            def versionName = android.defaultConfig.versionName
+            def versionCode = android.defaultConfig.versionCode
             if (variant.buildType.name == "debug") {
-                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_debug_${android.defaultConfig.versionCode}.apk"
+                output.outputFileName = "${date}${applicationId}${versionName}_debug_${versionCode}.apk"
             } else if (variant.buildType.name == "release") {
-                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_release_${android.defaultConfig.versionCode}.apk"
+                output.outputFileName = "${date}${applicationId}${versionName}_release_${versionCode}.apk"
             }
         }
     }
