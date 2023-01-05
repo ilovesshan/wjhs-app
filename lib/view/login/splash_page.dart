@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:app/model/user_auth_model.dart';
 import 'package:app/model/user_info_model.dart';
 import 'package:app/router/router.dart';
@@ -18,46 +16,45 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-
   @override
   void initState() {
     super.initState();
     // 初始化 本地存储工具
     SharedPreferencesUtil.initSharedPreferences();
 
-     Future.delayed( const Duration(milliseconds: 2000),() async {
-       // 判断是否能自动登录
-       String username = CommonCache.getUsername();
-       String password = CommonCache.getPassWord();
-       if(TextUtils.isNotValid(username) && TextUtils.isNotValid(password)){
-         // 实现自动登录功能
-         try {
-           // 用户授权
-           final UserAuthModel userAuthModel = await LoginService.requestUserAuth(username, password);
+    Future.delayed(const Duration(milliseconds: 2000),() async {
+     // 判断是否能自动登录
+     String username = CommonCache.getUsername();
+     String password = CommonCache.getPassWord();
+     if(TextUtils.isNotValid(username) && TextUtils.isNotValid(password)){
+       // 实现自动登录功能
+       try {
+         // 用户授权
+         final UserAuthModel userAuthModel = await LoginService.requestUserAuth(username, password);
+         if(TextUtils.isNotValid(userAuthModel.id.toString())){
+           // 获取用户信息
+           final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
            if(TextUtils.isNotValid(userAuthModel.id.toString())){
-             // 获取用户信息
-             final UserInfoModel userInfoModel = await UserService.requestUserInfo("${userAuthModel.id}");
-             if(TextUtils.isNotValid(userAuthModel.id.toString())){
-               // 持久化信息
-               Cache.saveUserInfo(userInfoModel);
-               CommonCache.saveId("${userAuthModel.id}");
-               CommonCache.saveUsername(username);
-               CommonCache.savePassword(password);
-               CommonCache.saveToken("${userAuthModel.token}");
-               // 去首页
-               Get.offAndToNamed(YFRouter.menuContainer);
-             }
-           }else{
-             Get.offAndToNamed(YFRouter.login);
+             // 持久化信息
+             Cache.saveUserInfo(userInfoModel);
+             CommonCache.saveId("${userAuthModel.id}");
+             CommonCache.saveUsername(username);
+             CommonCache.savePassword(password);
+             CommonCache.saveToken("${userAuthModel.token}");
+             // 去首页
+             Get.offAndToNamed(YFRouter.menuContainer);
            }
-         } catch (e) {
+         }else{
            Get.offAndToNamed(YFRouter.login);
          }
-       }else{
-          // 去登录
-          Get.offAndToNamed(YFRouter.login);
+       } catch (e) {
+         Get.offAndToNamed(YFRouter.login);
        }
-     });
+     }else{
+        // 去登录
+        Get.offAndToNamed(YFRouter.login);
+     }
+   });
   }
 
   @override

@@ -32,6 +32,7 @@ export 'package:qr_flutter/qr_flutter.dart';
 export 'package:url_launcher/url_launcher.dart';
 export 'package:jpush_flutter/jpush_flutter.dart';
 export 'package:jverify/jverify.dart';
+// export 'package:flutter_xupdate/flutter_xupdate.dart';
 
 /// 函数类型
 export 'src/types/types.dart';

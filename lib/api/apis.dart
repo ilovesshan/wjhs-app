@@ -43,4 +43,7 @@ class Apis {
 
   // 用户反馈模块
   static const String feedback = "/feedback";
+
+  // 查询最新版本的apk
+  static const String newApk = "/appVersions/new";
 }

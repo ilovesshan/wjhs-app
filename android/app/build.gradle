@@ -88,6 +88,7 @@ android {
             storePassword keystoreProperties['storePassword']
         }
     }
+
     buildTypes {
         release {
             signingConfig signingConfigs.release
@@ -102,6 +103,18 @@ android {
             ndk {
                 //这里要加上，否则debug包会出问题,后面两个为可选，x86建议加上不然部分模拟器回报错
                 abiFilters "armeabi", "armeabi-v7a", "arm64-v8a", "x86"
+            }
+        }
+    }
+
+    //修改apk 的 文件名
+    applicationVariants.all { variant ->
+        variant.outputs.all { output ->
+            def date = new Date().format("yyyy_MM_dd_hh_mm", TimeZone.getTimeZone("GMT+08"))
+            if (variant.buildType.name == "debug") {
+                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_debug_${android.defaultConfig.versionCode}.apk"
+            } else if (variant.buildType.name == "release") {
+                output.outputFileName = "${date}${android.defaultConfig.applicationId}${android.defaultConfig.versionName}_release_${android.defaultConfig.versionCode}.apk"
             }
         }
     }
